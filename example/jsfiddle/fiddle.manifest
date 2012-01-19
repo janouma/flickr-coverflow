@@ -1,9 +1,0 @@
-name: flickr-coverflow live demo
-description: Little preview of flickr-coverflow
-authors:
-  - Judicaël Anouma
-resources:
-  - https://raw.github.com/janouma/flickr-coverflow/master/lib/zepto.min.js
-  - https://raw.github.com/janouma/flickr-coverflow/master/lib/zepto.clone.fix.js
-  - https://raw.github.com/janouma/flickr-coverflow/master/lib/flickr-coverflow.min.js
-normalize_css: no
