@@ -78,3 +78,6 @@ To prevent mobile browser window from moving on touch events, add the following 
     $(document).on("touchmove", function(event) {
         return event.preventDefault();
     });
+
+# Preview
+**[see jsFiddle preview](http://jsfiddle.net/7AAth/10/)**
