@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/> 
+    <title>Sand box</title>
+	<script src="js/stringEnhancer.coffee" type="text/coffeescript"></script>
+	<script src="js/log.coffee" type="text/coffeescript"></script>
+	<script type="text/coffeescript">
+		log = new Logger() #level:LogLevel.WARNING
+		#console.log "Log level is #{log.configuration.level.label}"
+		#console.log "#{property}:#{value}" for property, value of log
+		
+		log.fatal "Trace conditional" if log.levelIsTrace()
+		log.fatal "Debug conditional" if log.levelIsDebug()
+		log.fatal "Info conditional" if log.levelIsInfo()
+		log.fatal "Warning conditional" if log.levelIsWarning()
+		log.fatal "Error conditional" if log.levelIsError()
+		log.fatal "Fatal conditional" if log.levelIsFatal()
+		
+		log.trace "Trace it"
+		log.debug "Debug it"
+		log.info "Info it"
+		log.warning "Warning it"
+		log.error "Error it"
+		log.fatal "Fatal it"
+	</script>
+	<script src="../lib/coffee-script.js"></script>
+  </head> 
+  <body> 
+    <div id="flickr-coverflow"/>
+  </body> 
+</html> 

@@ -1,0 +1,14 @@
+#flickr-coverflow {
+	border:solid 1px magenta;
+}
+
+.flickrCoverflow-image,
+.flickrCoverflow-img {
+	border:solid 1px yellow;
+}
+
+@media screen and (max-width: 320px) {
+	#flickr-coverflow {
+		border:solid 2px green;
+	}
+}
