@@ -1,6 +1,6 @@
-# flickr-coverflow - a zepto/jQuery plugin to display your public flickr gallery as a coverflow, on mobile and desktop html5 compliant browsers
+# flickr-coverflow - a zepto.js plugin to display your public flickr gallery as a coverflow, on mobile and desktop html5 compliant browsers
 
-To use flickr-coverflow, zepto.js *(<http://zeptojs.com/>)* or jQuery *(<http://jquery.com/>)* is required.
+To use flickr-coverflow, zepto.js *(<http://zeptojs.com/>)* is required.
 
 If you are using a version of zepto.js where clone() method is missing, you can use the script "lib/zepto.clone.fix.js" provided by the current distribution to fix that.
 
@@ -17,7 +17,7 @@ If you are using a version of zepto.js where clone() method is missing, you can 
                 renderIn3D: true
             }
         );
-    })
+    });
 
 >- "**flickr api key**" can be obtained via your flickr account on <http://www.flickr.com/>
 - "**flickr user**" can be obtained on <http://idgettr.com/>
