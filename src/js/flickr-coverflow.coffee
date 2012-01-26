@@ -67,6 +67,11 @@ class FlickrCoverFlowStyle
 					.flickrCoverflow-image[data-position='6'] {
 						#{transform "scale(.2) translateX(#{@position 6, '3D'}) translateZ(0) perspective(0) rotateY(0)"};
 					}
+					
+					.flickrCoverflow-previous,
+					.flickrCoverflow-next {
+						#{transform "translateZ(199px)"}
+					}
 				</style>
 				"""
 				
@@ -87,6 +92,7 @@ class FlickrCoverFlowStyle
 					vertical-align: bottom;
 					text-align: center;
 					position: absolute;
+					left:0;
 					bottom: 0;
 					z-index: 0;
 				}
@@ -97,9 +103,11 @@ class FlickrCoverFlowStyle
 					color: #fff;
 					font-family: Helvetica, Tahoma, Arial, Verdana;
 					font-size: .7em;
-					width: 100%;
+					width: 80px;
 					word-wrap: break-word;
-					position: absolute;
+					text-overflow: ellipsis;
+					overflow:hidden;
+					white-space: nowrap;
 					bottom: 0;
 				}
 
@@ -121,7 +129,10 @@ class FlickrCoverFlowStyle
 					width: 50%;
 					height: 100%;
 					cursor: pointer;
-					#{transform "translateZ(199px)"}
+				}
+				
+				.flickrCoverflow-previous {
+					left: 0;
 				}
 				
 				.flickrCoverflow-next {
@@ -252,7 +263,7 @@ class FlickrCoverFlow
 	
 	touchMoveStep = 70 #px
 	
-	version = "0.51"
+	version = "0.5.2"
 	
 	isMobile =-> $.os.ios or $.os.android or $.os.webos or $.os.touchpad or $.os.iphone or $.os.ipad or ($.os.blackberry and /7\.[1-9]\d*/g.test($.os.version))
 					

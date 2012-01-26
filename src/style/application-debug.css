@@ -7,8 +7,16 @@
 	border:solid 1px yellow;
 }
 
-@media screen and (max-width: 320px) {
-	#flickr-coverflow {
-		border:solid 2px green;
-	}
+.flickrCoverflow-previous,
+.flickrCoverflow-next {
+	background-color:green;
+	opacity:.5;
+}
+
+.flickrCoverflow-previous{
+	background-color:red;
+}
+
+.flickrCoverflow-next {
+	background-color:green;
 }
