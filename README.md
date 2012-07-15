@@ -27,7 +27,7 @@ It is possible to configure the **size** of loaded images and the **3D** effect 
 
     {size:"small", renderIn3D:true}
 
-Available sizes are **tiny**, **small** and **medium**. If **renderIn3D** is set to false — *or if browser doesn't support css 3D transformation yet e.g. firefox*, pictures are displayed flatten as a card game.
+Available sizes are **tiny**, **small** and **medium**. If **renderIn3D** is set to false — *or if browser doesn't support css 3D transformation yet e.g. Opera*, pictures are displayed flatten as a card game.
 
 If the third argument is not provided, the following default values are applied: **size = "tiny"** and **renderIn3D = false**
 
