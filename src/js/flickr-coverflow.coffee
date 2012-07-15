@@ -38,33 +38,35 @@ class FlickrCoverFlowStyle
 
 	positions = []
 
+	imageContainer: "flickrCoverflow-image-container"
+
 	style3d:-> """
 				<style>
-					.flickrCoverflow-image[data-position='0'] {
+					.#{@imageContainer}[data-position='0'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
 
-					.flickrCoverflow-image[data-position='1'] {
+					.#{@imageContainer}[data-position='1'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(45deg)"}
 					}
 
-					.flickrCoverflow-image[data-position='2'] {
+					.#{@imageContainer}[data-position='2'] .flickrCoverflow-image {
 						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(45deg)"}
 					}
 
-					.flickrCoverflow-image[data-position='3'] {
-						#{transform "perspective(0) scale(1) translateZ(200px) rotateY(0deg)"}
+					.#{@imageContainer}[data-position='3'] .flickrCoverflow-image {
+						#{transform "perspective(0) scale(1) translateZ(200px) rotateY(0)"}
 					}
 
-					.flickrCoverflow-image[data-position='4'] {
+					.#{@imageContainer}[data-position='4'] .flickrCoverflow-image {
 						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(-45deg)"}
 					}
 
-					.flickrCoverflow-image[data-position='5'] {
+					.#{@imageContainer}[data-position='5'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(-45deg)"}
 					}
 
-					.flickrCoverflow-image[data-position='6'] {
+					.#{@imageContainer}[data-position='6'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
 					
@@ -83,18 +85,22 @@ class FlickrCoverFlowStyle
 					height: #{@height()};
 					width: #{@width()};
 				}
-			
-				.flickrCoverflow-image {
+
+				.#{@imageContainer} {
 					display: inline-block;
-					min-width: 80px;
-					min-height: 80px;
-					margin: 0;
 					vertical-align: bottom;
-					text-align: center;
 					position: absolute;
 					left:0;
 					bottom: 0;
 					z-index: 0;
+				}
+
+				.flickrCoverflow-image {
+					position: relative;
+					min-width: 80px;
+					min-height: 80px;
+					margin: 0;
+					text-align: center;
 				}
 
 				.flickrCoverflow-title {
@@ -111,13 +117,13 @@ class FlickrCoverFlowStyle
 					bottom: 0;
 				}
 
-				.flickrCoverflow-image[data-template=yes],
-				.flickrCoverflow-image[data-position='none'] {
+				.#{@imageContainer}[data-template=yes],
+				.#{@imageContainer}[data-position='none'] {
 					display: none;
 					opacity: 0;
 				}
 
-				:not(.flickrCoverflow-image[data-position='none']) {
+				:not(.#{@imageContainer}[data-position='none']) {
 					display: inline-block;
 					opacity: 1;
 				}
@@ -139,49 +145,55 @@ class FlickrCoverFlowStyle
 					right: 0;
 				}
 
-				/***/
 
-				.flickrCoverflow-image[data-position='0'] {
-					z-index: 0;
-					opacity: 0;
-					margin-left: #{@position 0};
-				}
 
-				.flickrCoverflow-image[data-position='1'] {
-					z-index: 1;
-					margin-left: #{@position 1};
-				}
-
-				.flickrCoverflow-image[data-position='2'] {
-					z-index: 2;
+				.#{@imageContainer}[data-position='2'] .flickrCoverflow-image,
+				.#{@imageContainer}[data-position='4'] .flickrCoverflow-image {
 					box-shadow: 0 0 10px #000;
-					margin-left: #{@position 2};
 				}
 
-				.flickrCoverflow-image[data-position='3'] {
-					z-index: 4;
+				.#{@imageContainer}[data-position='3'] .flickrCoverflow-image {
 					box-shadow: 0 0 20px #000;
-					margin-left: #{@position 3};
 				}
 
-				.flickrCoverflow-image[data-position='4'] {
-					z-index: 2;
-					box-shadow: 0 0 10px #000;
-					margin-left: #{@position 4};
-				}
 
-				.flickrCoverflow-image[data-position='5'] {
-					z-index: 1;
-					margin-left: #{@position 5};
-				}
 
-				.flickrCoverflow-image[data-position='6'] {
+				.#{@imageContainer}[data-position='0'] {
 					z-index: 0;
 					opacity: 0;
-					margin-left: #{@position 6};
+					#{transform "translateX(#{@position 0}) translateZ(0)"}
 				}
 
-				/***/
+				.#{@imageContainer}[data-position='1'] {
+					z-index: 1;
+					#{transform "translateX(#{@position 1}) translateZ(0)"}
+				}
+
+				.#{@imageContainer}[data-position='2'] {
+					z-index: 2;
+					#{transform "translateX(#{@position 2}) translateZ(100px)"}
+				}
+
+				.#{@imageContainer}[data-position='3'] {
+					z-index: 4;
+					#{transform "translateX(#{@position 3}) translateZ(200px)"}
+				}
+
+				.#{@imageContainer}[data-position='4'] {
+					z-index: 2;
+					#{transform "translateX(#{@position 4}) translateZ(100px)"}
+				}
+
+				.#{@imageContainer}[data-position='5'] {
+					z-index: 1;
+					#{transform "translateX(#{@position 5}) translateZ(0)"}
+				}
+
+				.#{@imageContainer}[data-position='6'] {
+					z-index: 0;
+					opacity: 0;
+					#{transform "translateX(#{@position 6}) translateZ(0)"}
+				}
 
 				.flickrCoverflow-img {
 					vertical-align: inherit;
@@ -254,8 +266,7 @@ class FlickrCoverFlow
 	version = "0.5.2"
 	
 	isMobile =-> $.os.ios or $.os.android or $.os.webos or $.os.touchpad or $.os.iphone or $.os.ipad or ($.os.blackberry and /7\.[1-9]\d*/g.test($.os.version))
-					
-	images: ".flickrCoverflow-image[data-template=no]"
+
 	previousButton: ".flickrCoverflow-previous"
 	nextButton: ".flickrCoverflow-next"
 	pageSize: 7
@@ -266,15 +277,16 @@ class FlickrCoverFlow
 		throw new Error "page size must be odd, actual = #{@pageSize}" if @pageSize % 2 == 0
 
 		@htmlNode.attr "data-version":version
-		@createImageTemplate()
 		@style = new FlickrCoverFlowStyle @options.size, @htmlNode.selector, @options.renderIn3D
+		@images = ".#{@style.imageContainer}[data-template=no]"
+		@createImageTemplate()
 		@style.apply()
 
 		@offset = @startX = 0
 		@photos = []
 		@page = 1
 		@median = (@pageSize - 1) / 2
-		@medianImage = ".flickrCoverflow-image[data-position='#{@median}']"
+		@medianImage = ".#{@style.imageContainer}[data-position='#{@median}']"
 		@source += "&api_key=#{@apiKey}&user_id=#{@user}&per_page=#{@pageSize*2}"
 		@attachEvents()
 		log?.trace("#{property}: #{value}") for property, value of @ if logLevelIsTrace?()
@@ -286,9 +298,11 @@ class FlickrCoverFlow
 		@htmlNode.html """
 			<div class="flickrCoverflow-previous"></div>
 			<div class="flickrCoverflow-next"></div>
-			<div class="flickrCoverflow-image" data-template="yes">
-				<img class="flickrCoverflow-img" src="#{pendingImageSrc}"/>
-				<div class="flickrCoverflow-title">No title</div>
+			<div class="#{@style.imageContainer}" data-template="yes">
+				<div class="flickrCoverflow-image">
+					<img class="flickrCoverflow-img" src="#{pendingImageSrc}"/>
+					<div class="flickrCoverflow-title">No title</div>
+				</div>
 			</div>
 			"""
 
@@ -331,7 +345,7 @@ class FlickrCoverFlow
 	
 	createImageFrom: (photo)->
 		log?.debug "photo: #{photo.title}, #{@style.url()}: #{photo[@style.url()]}"
-		image = $(".flickrCoverflow-image[data-template=yes]").clone()
+		image = $(".#{@style.imageContainer}[data-template=yes]").clone()
 		
 		image.attr(
 			"data-template":"no"
@@ -430,7 +444,7 @@ class FlickrCoverFlow
 			@loadNewPageIfPageChanged()
 		
 	setImagesPosition: ->
-		for image, position in $(".flickrCoverflow-image[data-show='yes']")
+		for image, position in $(".#{@style.imageContainer}[data-show='yes']")
 			log?.debug "position + median: #{position}, image: #{image}"
 			$(image).attr "data-position": position
 	

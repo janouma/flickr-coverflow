@@ -12,13 +12,13 @@ $ ->
 		user: "80141149@N00"
 	
 	coverflow = $("#flickr-coverflow").flickrCoverflow(
-								jo.apiKey
-								jo.user
+								juice.apiKey
+								juice.user
 								size:"small"
 								renderIn3D:true
 						  )
 						
-	$(document).on "touchmove", (event) => event.preventDefault()
+	$(document).bind "touchmove", (event) => event.preventDefault()
 	
-	$("#flickr-coverflow").on "zoom", (event) ->
+	$("#flickr-coverflow").bind "zoom", (event) ->
 		console.log "Zoom Event has been triggered on #{$(this).attr 'id'}, url: #{event.zoomUrl}"
