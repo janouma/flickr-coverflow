@@ -41,7 +41,7 @@ class FlickrCoverFlowStyle
 	style3d:-> """
 				<style>
 					.flickrCoverflow-image[data-position='0'] {
-						#{transform "perspective(0) scale(.2) translateZ(0) rotateY(0)"}
+						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
 
 					.flickrCoverflow-image[data-position='1'] {
@@ -65,7 +65,7 @@ class FlickrCoverFlowStyle
 					}
 
 					.flickrCoverflow-image[data-position='6'] {
-						#{transform "perspective(0) scale(.2) translateZ(0) rotateY(0)"}
+						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
 					
 					.flickrCoverflow-previous,
