@@ -45,11 +45,11 @@ class FlickrCoverFlowStyle
 					}
 
 					.flickrCoverflow-image[data-position='1'] {
-						#{transform "perspective(700px) scale(.6) translateZ(0) rotateY(45deg)"}
+						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='2'] {
-						#{transform "perspective(500px) scale(.8) translateZ(100px) rotateY(45deg)"}
+						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='3'] {
@@ -57,11 +57,11 @@ class FlickrCoverFlowStyle
 					}
 
 					.flickrCoverflow-image[data-position='4'] {
-						#{transform "perspective(500px) scale(.8) translateZ(100px) rotateY(-45deg)"}
+						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(-45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='5'] {
-						#{transform "perspective(700px) scale(.6) translateZ(0) rotateY(-45deg)"}
+						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(-45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='6'] {
@@ -216,11 +216,11 @@ class FlickrCoverFlowStyle
 		positions = [
 			0
 			0
-			20.percentOf @width() #"96px"
-			35.percentOf @width() #"168px"
-			50.percentOf @width() #"241px"
-			70.percentOf @width() #"337px"
-			70.percentOf @width() #"337px"
+			15.percentOf @width()
+			35.percentOf @width()
+			55.percentOf @width()
+			70.percentOf @width()
+			70.percentOf @width()
 		]
 		
 		delete Number.prototype.percentOf
