@@ -3,6 +3,7 @@ if Logger? then log = new Logger level:LogLevel.INFO
 
 # Classes
 
+
 class FlickrCoverFlowStyle
 
 	layouts =
@@ -24,48 +25,47 @@ class FlickrCoverFlowStyle
 			width:"960px"
 			imgMaxWidth:"215px"
 			urlZoom: "url_m"
+
+	prefixes = [
+		"-webkit-"
+		"-moz-"
+		"-o-"
+		"-ms-"
+		""
+	]
 			
-	transform = (transformations) ->
-		"""
-		transform: #{transformations};
-		-moz-transform: #{transformations}; /* Firefox */
-		-webkit-transform: #{transformations}; /* Safari, Chrome */
-		-o-transform: #{transformations}; /* Opera */
-		-ms-transform: #{transformations}; /* ie 10 */
-		"""
-		
-	positionsFlat = []
-	
-	positions3D = []
-	
+	transform = (transformations) -> ("#{prefix}transform: #{transformations};" for prefix in prefixes).join "\n"
+
+	positions = []
+
 	style3d:-> """
 				<style>
 					.flickrCoverflow-image[data-position='0'] {
-						#{transform "scale(.2) translateX(#{@position 0, '3D'}) translateZ(0) perspective(0) rotateY(0)"};
+						#{transform "perspective(0) scale(.2) translateZ(0) rotateY(0)"}
 					}
 
 					.flickrCoverflow-image[data-position='1'] {
-						#{transform "scale(.6) translateX(0) translateZ(#{@position 1, '3D'}) perspective(700) rotateY(45deg)"};
+						#{transform "perspective(700px) scale(.6) translateZ(0) rotateY(45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='2'] {
-						#{transform "scale(.8) translateX(#{@position 2, '3D'}) translateZ(100px) perspective(500) rotateY(45deg)"};
+						#{transform "perspective(500px) scale(.8) translateZ(100px) rotateY(45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='3'] {
-						#{transform "scale(1) translateX(#{@position 3, '3D'}) translateZ(200px) perspective(0) rotateY(0deg)"};
+						#{transform "perspective(0) scale(1) translateZ(200px) rotateY(0deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='4'] {
-						#{transform "scale(.8) translateX(#{@position 4, '3D'}) translateZ(100px) perspective(500) rotateY(-45deg)"};
+						#{transform "perspective(500px) scale(.8) translateZ(100px) rotateY(-45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='5'] {
-						#{transform "scale(.6) translateX(#{@position 5, '3D'}) translateZ(0) perspective(700) rotateY(-45deg)"};
+						#{transform "perspective(700px) scale(.6) translateZ(0) rotateY(-45deg)"}
 					}
 
 					.flickrCoverflow-image[data-position='6'] {
-						#{transform "scale(.2) translateX(#{@position 6, '3D'}) translateZ(0) perspective(0) rotateY(0)"};
+						#{transform "perspective(0) scale(.2) translateZ(0) rotateY(0)"}
 					}
 					
 					.flickrCoverflow-previous,
@@ -144,41 +144,41 @@ class FlickrCoverFlowStyle
 				.flickrCoverflow-image[data-position='0'] {
 					z-index: 0;
 					opacity: 0;
-					#{transform "translateX(#{@position 0})"}
+					margin-left: #{@position 0};
 				}
 
 				.flickrCoverflow-image[data-position='1'] {
 					z-index: 1;
-					#{transform "translateX(#{@position 1})"}
+					margin-left: #{@position 1};
 				}
 
 				.flickrCoverflow-image[data-position='2'] {
 					z-index: 2;
 					box-shadow: 0 0 10px #000;
-					#{transform "translateX(#{@position 2})"}
+					margin-left: #{@position 2};
 				}
 
 				.flickrCoverflow-image[data-position='3'] {
 					z-index: 4;
 					box-shadow: 0 0 20px #000;
-					#{transform "translateX(#{@position 3})"}
+					margin-left: #{@position 3};
 				}
 
 				.flickrCoverflow-image[data-position='4'] {
 					z-index: 2;
 					box-shadow: 0 0 10px #000;
-					#{transform "translateX(#{@position 4})"}
+					margin-left: #{@position 4};
 				}
 
 				.flickrCoverflow-image[data-position='5'] {
 					z-index: 1;
-					#{transform "translateX(#{@position 5})"}
+					margin-left: #{@position 5};
 				}
 
 				.flickrCoverflow-image[data-position='6'] {
 					z-index: 0;
 					opacity: 0;
-					#{transform "translateX(#{@position 6})"}
+					margin-left: #{@position 6};
 				}
 
 				/***/
@@ -189,12 +189,11 @@ class FlickrCoverFlowStyle
 				}
 			</style>
 			"""
-			
-	position: (position, depth = "Flat") ->
+
+	position: (position) ->
 		throw new Error "position must be a not null Number" if position?.constructor isnt Number
-		positions = if depth is "3D" then positions3D else positionsFlat
 		log?.debug "positions: #{positions}"
-		log?.debug "calculating position(#{position}, #{depth}) = #{positions[position]}"
+		log?.debug "calculating position(#{position}) = #{positions[position]}"
 		positions[position]
 	
 	width: -> layouts[@size].width
@@ -202,29 +201,19 @@ class FlickrCoverFlowStyle
 	url: -> layouts[@size].url
 	urlZoom: -> layouts[@size].urlZoom
 	maxWidth: -> layouts[@size].imgMaxWidth
-	
+
 	constructor: (@size, @containerSelector, @renderIn3D = false) ->
 		throw new Error "#{@size} is not a valid flickr-coverflow size" if !layouts[@size]
 		throw new Error "#{@containerSelector} is not a valid css selector" if !@containerSelector or !$(@containerSelector)
 		log?.info "Render in 3D: #{@renderIn3D}"
-		
+
 		Number.prototype.percentOf = (width) ->
-			throw new Error "width cannot be null or empty" if !width
+			throw new Error "width cannot be null or empty" if not width
 			units = width.replace /\d*/, ""
 			value = parseInt(width)
-			"#{Math.round((@/100)*value)}#{units}"
-
-		positions3D = [
-			0
-			0
-			20.percentOf @width() #"96px"
-			35.percentOf @width() #"168px"
-			65.percentOf @width() #"312px"
-			115.percentOf @width() #"552px"
-			115.percentOf @width() #"552px"
-		]
+			"#{Math.round((@ / 100)*value)}#{units}"
 		
-		positionsFlat = [
+		positions = [
 			0
 			0
 			20.percentOf @width() #"96px"
@@ -236,22 +225,21 @@ class FlickrCoverFlowStyle
 		
 		delete Number.prototype.percentOf
 		
-		log?.debug "positions3D: #{positions3D}"
-		log?.debug "positionsFlat: #{positionsFlat}"
-		
+		log?.debug "positions: #{positions}"
+
 	apply: ->
 		log?.debug "about to apply required style"
 		head = $("head")
 		head.prepend @style3d() if @renderIn3D
 		head.prepend(
-						  """
-							<style>
-								.flickrCoverflow-img {
-									max-width: #{@maxWidth()};
-								}
-							</style>
-						  """
-						)
+			"""
+			<style>
+				.flickrCoverflow-img {
+					max-width: #{@maxWidth()};
+				}
+			</style>
+			"""
+		)
 		head.prepend @style()
 
 
@@ -272,7 +260,7 @@ class FlickrCoverFlow
 	nextButton: ".flickrCoverflow-next"
 	pageSize: 7
 	source: "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&nojsoncallback=1&extras=url_t,url_s,url_m"
-		
+
 	constructor: (@apiKey, @user, @htmlNode, @options = size:"tiny") ->
 		log?.info "Coverflow html node: <#{@htmlNode.prop? 'tagName'}:#{@htmlNode.selector}/>"
 		throw new Error "page size must be odd, actual = #{@pageSize}" if @pageSize % 2 == 0
@@ -281,29 +269,29 @@ class FlickrCoverFlow
 		@createImageTemplate()
 		@style = new FlickrCoverFlowStyle @options.size, @htmlNode.selector, @options.renderIn3D
 		@style.apply()
-		
+
 		@offset = @startX = 0
 		@photos = []
 		@page = 1
-		@median = (@pageSize - 1)/2
+		@median = (@pageSize - 1) / 2
 		@medianImage = ".flickrCoverflow-image[data-position='#{@median}']"
 		@source += "&api_key=#{@apiKey}&user_id=#{@user}&per_page=#{@pageSize*2}"
 		@attachEvents()
-		log?.trace "#{property}: #{value}" for property, value of @ if logLevelIsTrace?()
-		log?.trace "@htmlNode properties: \n#{property}: #{value}" for property, value of @htmlNode if logLevelIsTrace?()
-	
+		log?.trace("#{property}: #{value}") for property, value of @ if logLevelIsTrace?()
+		log?.trace("@htmlNode properties: \n#{property}: #{value}") for property, value of @htmlNode if logLevelIsTrace?()
+
 	version: -> version
 		
 	createImageTemplate: ->
 		@htmlNode.html """
-						<div class="flickrCoverflow-previous"></div>
-						<div class="flickrCoverflow-next"></div>
-						<div class="flickrCoverflow-image" data-template="yes">
-							<img class="flickrCoverflow-img" src="#{pendingImageSrc}"/>
-							<div class="flickrCoverflow-title">No title</div>
-						</div>
-					   """
-						
+			<div class="flickrCoverflow-previous"></div>
+			<div class="flickrCoverflow-next"></div>
+			<div class="flickrCoverflow-image" data-template="yes">
+				<img class="flickrCoverflow-img" src="#{pendingImageSrc}"/>
+				<div class="flickrCoverflow-title">No title</div>
+			</div>
+			"""
+
 	load: ->
 		pageSource = "#{@source}&page=#{@page}"
 		log?.info "load > Page source: #{pageSource}"
@@ -323,7 +311,7 @@ class FlickrCoverFlow
 							
 					@photos.push photo for photo in data.photos.photo
 					log?.debug "#{@photos.length} loaded"
-					log?.debug "#{data.photos.total} photos to handle"		
+					log?.debug "#{data.photos.total} photos to handle"
 					visibleImages = @photos[@offset...@pageSize]
 					@appendPhoto(photo) for photo in visibleImages
 					@setImagesPosition()
@@ -368,22 +356,25 @@ class FlickrCoverFlow
 			@attachNextEvent()
 			@attachPreviousEvent()
 		
-	attachNextEvent: -> $(@nextButton, @htmlNode).on("mousedown", =>@next()).css("cursor", "pointer")
+	attachNextEvent: -> $(@nextButton, @htmlNode).bind("mousedown", =>@next()).css("cursor", "pointer")
 
-	attachPreviousEvent: -> $(@previousButton, @htmlNode).on("mousedown", =>@previous()).css("cursor", "pointer")
+	attachPreviousEvent: -> $(@previousButton, @htmlNode).bind("mousedown", =>@previous()).css("cursor", "pointer")
 	
 	addZoomEvent: ->
 		triggeringEvent = if isMobile() then "tap" else "click"
 		log?.debug "median image selector: '#{@medianImage}'"
 		trigerringElement = $(@medianImage, @htmlNode).css "cursor":"pointer"
-		trigerringElement.on triggeringEvent, =>
-													log?.debug "about to trigger 'zoom' event"
-													@htmlNode.trigger (
-														$.Event(
-															"zoom"
-															{ zoomUrl: trigerringElement.attr "data-zoom-url" }
-														)
-													)
+		trigerringElement.bind(
+			triggeringEvent
+			=>
+				log?.debug "about to trigger 'zoom' event"
+				@htmlNode.trigger (
+					$.Event(
+						"zoom"
+						{ zoomUrl: trigerringElement.attr "data-zoom-url" }
+					)
+				)
+		)
 	
 	hasNext: -> @photos[@offset+@pageSize]
 		
@@ -433,10 +424,10 @@ class FlickrCoverFlow
 		
 	appendNextPhotoIfAny: ->
 		if nextPhoto = @hasNext()
-		                       log?.debug "photo '#{nextPhoto.title}' exists at index #{@offset+@pageSize}"
-		                       @offset++
-		                       @appendPhoto nextPhoto
-		                       @loadNewPageIfPageChanged()
+			log?.debug "photo '#{nextPhoto.title}' exists at index #{@offset+@pageSize}"
+			@offset++
+			@appendPhoto nextPhoto
+			@loadNewPageIfPageChanged()
 		
 	setImagesPosition: ->
 		for image, position in $(".flickrCoverflow-image[data-show='yes']")
@@ -460,52 +451,55 @@ class FlickrCoverFlow
 		endX = event.targetTouches[0].pageX
 		@deltaX = endX - @startX
 		log?.trace "@deltaX: #{@deltaX}"
-		
+
 		if @deltaX > touchMoveStep
 			log?.debug "@deltaX before previous(): #{@deltaX}"
 			@startX = endX
 			@deltaX = 0
 			@previous()
 			log?.debug "@deltaX after previous(): #{@deltaX}"
-			
+
 		if @deltaX < -touchMoveStep
 			log?.debug "@deltaX before next(): #{@deltaX}"
 			@startX = endX
 			@deltaX = 0
 			@next()
 			log?.debug "@deltaX after next(): #{@deltaX}"
-		
+
+
 	attachTouchEvents: ->
 		log?.debug "attaching touch events"
 		log?.debug "@htmlNode.id: #{@htmlNode.attr 'id'}"
 		
-		@htmlNode.on "touchstart", (event) =>
-										@startX = event.targetTouches[0].pageX
-										log?.debug "@startX: #{@startX}"
-								
-		@htmlNode.on "touchmove", (event) =>@touchMoveHandler()					
-		@htmlNode.on "touchend", => @deltaX = 0
+		@htmlNode.bind "touchstart", (event) =>
+			@startX = event.targetTouches[0].pageX
+			log?.debug "@startX: #{@startX}"
+
+		@htmlNode.bind "touchmove", (event) =>@touchMoveHandler()
+		@htmlNode.bind "touchend", => @deltaX = 0
+
 
 
 # The jQuery plugin
+
 
 do ($) ->
 	$.fn.flickrCoverflow = (apiKey, user, options = size:"tiny") ->
 		log?.info "Using flickrCoverflow jQuery plugin"
 		
-		if this.css("display") != "none"
+		if @.css("display") != "none"
 			coverflow = new FlickrCoverFlow(
-					apiKey
-					user
-					this
-					options
-				)
+				apiKey
+				user
+				@
+				options
+			)
 			
 			coverflow.load()
 			
 			log?.info "flickrCoverflow selector: #{coverflow.htmlNode.selector}"
 		else
-			log?.info "#{this.attr 'id'} is not visible, no need to create coverflow"
+			log?.info "#{@.attr 'id'} is not visible, no need to create coverflow"
 			
-		this
+		@
 
