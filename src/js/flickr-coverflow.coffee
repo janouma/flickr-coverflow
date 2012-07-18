@@ -101,6 +101,7 @@ class FlickrCoverFlowStyle
 					min-height: 80px;
 					margin: 0;
 					text-align: center;
+					vertical-align: inherit;
 				}
 
 				.flickrCoverflow-title {
