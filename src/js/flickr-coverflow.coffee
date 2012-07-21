@@ -93,6 +93,10 @@ class FlickrCoverFlowStyle
 					left:0;
 					bottom: 0;
 					z-index: 0;
+
+					// Flickering animation fix
+					-webkit-perspective: 1000
+					-webkit-backface-visibility: hidden
 				}
 
 				.flickrCoverflow-image {
@@ -102,6 +106,10 @@ class FlickrCoverFlowStyle
 					margin: 0;
 					text-align: center;
 					vertical-align: inherit;
+
+					// Flickering animation fix
+					-webkit-perspective: 1000
+					-webkit-backface-visibility: hidden
 				}
 
 				.flickrCoverflow-title {
