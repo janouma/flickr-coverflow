@@ -38,6 +38,11 @@ class FlickrCoverFlowStyle
 
 	positions = []
 
+	isOpera = ()-> (/(opera|presto)/gi).test window.navigator?.userAgent
+
+	translate = (x, y, z)->
+		if not isOpera() then transform "translateX(#{x}) translateZ(#{z})" else "margin-left: #{x};"
+
 	imageContainer: "flickrCoverflow-image-container"
 
 	style3d:-> """
@@ -170,38 +175,38 @@ class FlickrCoverFlowStyle
 				.#{@imageContainer}[data-position='0'] {
 					z-index: 0;
 					opacity: 0;
-					#{transform "translateX(#{@position 0}) translateZ(0)"}
+					#{translate (@position 0), 0, 0}
 				}
 
 				.#{@imageContainer}[data-position='1'] {
 					z-index: 1;
-					#{transform "translateX(#{@position 1}) translateZ(0)"}
+					#{translate (@position 1), 0, 0}
 				}
 
 				.#{@imageContainer}[data-position='2'] {
 					z-index: 2;
-					#{transform "translateX(#{@position 2}) translateZ(100px)"}
+					#{translate (@position 2), 0, "100px"}
 				}
 
 				.#{@imageContainer}[data-position='3'] {
 					z-index: 4;
-					#{transform "translateX(#{@position 3}) translateZ(200px)"}
+					#{translate (@position 3), 0, "200px"}
 				}
 
 				.#{@imageContainer}[data-position='4'] {
 					z-index: 2;
-					#{transform "translateX(#{@position 4}) translateZ(100px)"}
+					#{translate (@position 4), 0, "100px"}
 				}
 
 				.#{@imageContainer}[data-position='5'] {
 					z-index: 1;
-					#{transform "translateX(#{@position 5}) translateZ(0)"}
+					#{translate (@position 5), 0, 0}
 				}
 
 				.#{@imageContainer}[data-position='6'] {
 					z-index: 0;
 					opacity: 0;
-					#{transform "translateX(#{@position 6}) translateZ(0)"}
+					#{translate (@position 6), 0, 0}
 				}
 
 				.flickrCoverflow-img {
