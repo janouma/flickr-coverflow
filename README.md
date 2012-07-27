@@ -80,4 +80,4 @@ To prevent mobile browser window from moving on touch events, add the following 
     });
 
 # Preview
-**[see jsFiddle preview](http://jsfiddle.net/7AAth/10/)**
+**[see jsFiddle preview](http://jsfiddle.net/7AAth/13/)**
