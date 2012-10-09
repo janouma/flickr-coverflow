@@ -16,6 +16,9 @@ $ ->
 								juice.user
 								size:"small"
 								renderIn3D:true
+								onLoad: ->
+									console.log "Coverflow loaded"
+									$(this).css opacity:1
 						  )
 						
 	$(document).bind "touchmove", (event) => event.preventDefault()

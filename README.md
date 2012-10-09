@@ -31,6 +31,8 @@ Available sizes are **tiny**, **small** and **medium**. If **renderIn3D** is set
 
 If the third argument is not provided, the following default values are applied: **size = "tiny"** and **renderIn3D = false**
 
+It is possible to fire a script after the coverflow is loaded by setting the "onLoad" option to a function. Note that inside the function $(this) refer to the coverflow html node, *#coverflow* in the example.
+
 ## Events
 When tapping/clicking on the current picture a **zoom** event is triggered, allowing to show a larger version of the picture. The related event object provides a **zoomUrl** property which is the flickr url of the larger image:
 

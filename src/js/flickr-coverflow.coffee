@@ -277,7 +277,7 @@ class FlickrCoverFlow
 	
 	touchMoveStep = 70 #px
 	
-	version = "0.5.2"
+	version = "0.5.3"
 	
 	isMobile =-> $.os.ios or $.os.android or $.os.webos or $.os.touchpad or $.os.iphone or $.os.ipad or ($.os.blackberry and /7\.[1-9]\d*/g.test($.os.version))
 
@@ -344,6 +344,7 @@ class FlickrCoverFlow
 					@appendPhoto(photo) for photo in visibleImages
 					@setImagesPosition()
 					@addZoomEvent()
+					@options.onLoad?()
 		)
 
 	appendPhoto: (photo, callback=null) ->
@@ -514,13 +515,17 @@ class FlickrCoverFlow
 do ($) ->
 	$.fn.flickrCoverflow = (apiKey, user, options = size:"tiny") ->
 		log?.info "Using flickrCoverflow jQuery plugin"
+
+		copiedOptions = {}
+		copiedOptions[option] = value for option, value of options
+		copiedOptions.onLoad = options.onLoad.bind(@) if options.onLoad
 		
 		if @.css("display") != "none"
 			coverflow = new FlickrCoverFlow(
 				apiKey
 				user
 				@
-				options
+				copiedOptions
 			)
 			
 			coverflow.load()
