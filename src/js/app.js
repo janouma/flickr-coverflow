@@ -1,1 +1,2 @@
-console.log("app");
+FlickrCoverflow.logLevel = "debug";
+new FlickrCoverflow();
