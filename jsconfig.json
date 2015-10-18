@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "ES6"
+	},
+	"exclude": [
+		"test",
+		"example",
+		"dist",
+		"images",
+		"style"
+	]
+}
