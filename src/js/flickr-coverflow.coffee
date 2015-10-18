@@ -33,7 +33,7 @@ class FlickrCoverFlowStyle
 		"-ms-"
 		""
 	]
-			
+
 	transform = (transformations) -> ("#{prefix}transform: #{transformations};" for prefix in prefixes).join "\n"
 
 	positions = []
@@ -45,52 +45,60 @@ class FlickrCoverFlowStyle
 
 	imageContainer: "flickrCoverflow-image-container"
 
-	style3d:-> """
-				<style>
+	style3d:-> [
+					"""
 					.#{@imageContainer}[data-position='0'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='1'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(45deg)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='2'] .flickrCoverflow-image {
 						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(45deg)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='3'] .flickrCoverflow-image {
 						#{transform "perspective(0) scale(1) translateZ(200px) rotateY(0)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='4'] .flickrCoverflow-image {
 						#{transform "perspective(500px) scale(.65) translateZ(100px) rotateY(-45deg)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='5'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.65) translateZ(0) rotateY(-45deg)"}
 					}
-
+					"""
+					"""
 					.#{@imageContainer}[data-position='6'] .flickrCoverflow-image {
 						#{transform "perspective(700px) scale(.2) translateZ(0) rotateY(0)"}
 					}
-					
+					"""
+					"""
 					.flickrCoverflow-previous,
 					.flickrCoverflow-next {
 						#{transform "translateZ(199px)"}
 					}
-				</style>
+					"""
+				]
+
+	style:-> [
 				"""
-				
-	style:-> """
-			<style>
 				#{@containerSelector}{
 					text-align: center;
 					position: relative;
 					height: #{@height()};
 					width: #{@width()};
 				}
-
+				"""
+				"""
 				.#{@imageContainer} {
 					display: inline-block;
 					vertical-align: bottom;
@@ -99,11 +107,12 @@ class FlickrCoverFlowStyle
 					bottom: 0;
 					z-index: 0;
 
-					// Flickering animation fix
+					/* Flickering animation fix */
 					-webkit-perspective: 1000
 					-webkit-backface-visibility: hidden
 				}
-
+				"""
+				"""
 				.flickrCoverflow-image {
 					position: relative;
 					min-width: 80px;
@@ -112,36 +121,42 @@ class FlickrCoverFlowStyle
 					text-align: center;
 					vertical-align: inherit;
 
-					// Flickering animation fix
+					/* Flickering animation fix */
 					-webkit-perspective: 1000
 					-webkit-backface-visibility: hidden
 				}
-
+				"""
+				"""
 				.flickrCoverflow-title {
+					position: absolute;
 					display: none;
 					background-color: #000;
 					color: #fff;
 					font-family: Helvetica, Tahoma, Arial, Verdana;
 					font-size: .7em;
-					width: 80px;
+					width: 100%;
 					word-wrap: break-word;
 					text-overflow: ellipsis;
 					overflow:hidden;
 					white-space: nowrap;
+					left:0;
 					bottom: 0;
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-template=yes],
 				.#{@imageContainer}[data-position='none'] {
 					display: none;
 					opacity: 0;
 				}
-
+				"""
+				"""
 				:not(.#{@imageContainer}[data-position='none']) {
 					display: inline-block;
 					opacity: 1;
 				}
-				
+				"""
+				"""
 				.flickrCoverflow-previous,
 				.flickrCoverflow-next {
 					position: absolute;
@@ -150,78 +165,86 @@ class FlickrCoverFlowStyle
 					height: 100%;
 					cursor: pointer;
 				}
-				
+				"""
+				"""
 				.flickrCoverflow-previous {
 					left: 0;
 				}
-				
+				"""
+				"""
 				.flickrCoverflow-next {
 					right: 0;
 				}
-
-
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='2'] .flickrCoverflow-image,
 				.#{@imageContainer}[data-position='4'] .flickrCoverflow-image {
 					box-shadow: 0 0 10px #000;
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='3'] .flickrCoverflow-image {
 					box-shadow: 0 0 20px #000;
 				}
-
-
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='0'] {
 					z-index: 0;
 					opacity: 0;
 					#{translate (@position 0), 0, 0}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='1'] {
 					z-index: 1;
 					#{translate (@position 1), 0, 0}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='2'] {
 					z-index: 2;
 					#{translate (@position 2), 0, "100px"}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='3'] {
 					z-index: 4;
 					#{translate (@position 3), 0, "200px"}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='4'] {
 					z-index: 2;
 					#{translate (@position 4), 0, "100px"}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='5'] {
 					z-index: 1;
 					#{translate (@position 5), 0, 0}
 				}
-
+				"""
+				"""
 				.#{@imageContainer}[data-position='6'] {
 					z-index: 0;
 					opacity: 0;
 					#{translate (@position 6), 0, 0}
 				}
-
+				"""
+				"""
 				.flickrCoverflow-img {
 					vertical-align: inherit;
 					max-height: 100%;
 				}
-			</style>
-			"""
+				"""
+			]
 
 	position: (position) ->
 		throw new Error "position must be a not null Number" if position?.constructor isnt Number
 		log?.debug "positions: #{positions}"
 		log?.debug "calculating position(#{position}) = #{positions[position]}"
 		positions[position]
-	
+
 	width: -> layouts[@size].width
 	height: -> layouts[@size].height
 	url: -> layouts[@size].url
@@ -238,7 +261,7 @@ class FlickrCoverFlowStyle
 			units = width.replace /\d*/, ""
 			value = parseInt(width)
 			"#{Math.round((@ / 100)*value)}#{units}"
-		
+
 		positions = [
 			0
 			0
@@ -248,43 +271,59 @@ class FlickrCoverFlowStyle
 			70.percentOf @width()
 			70.percentOf @width()
 		]
-		
+
 		delete Number.prototype.percentOf
-		
+
 		log?.debug "positions: #{positions}"
 
 	apply: ->
 		log?.debug "about to apply required style"
-		head = $("head")
-		head.prepend @style3d() if @renderIn3D
-		head.prepend(
-			"""
-			<style>
-				.flickrCoverflow-img {
-					max-width: #{@maxWidth()};
-				}
-			</style>
-			"""
-		)
-		head.prepend @style()
+		head = $("head")[0]
+		firstStyleElt = head.querySelector "style"
+
+		style = document.createElement "style"
+		style.id = "flickr-coverflow-style"
+
+		if firstStyleElt
+			head.insertBefore style, firstStyleElt
+		else
+			head.appendChild style
+
+		sheet = style.sheet
+
+		for rule in @style()
+			try
+				sheet.insertRule rule.replace /\n|\r/g, "", 0
+			catch e
+				log?.error e
+
+		if @renderIn3D
+			for rule in @style3d()
+				try
+					sheet.insertRule rule.replace /\n|\r/g, "", 0
+				catch e
+					log?.error e
+
+		sheet.insertRule ".flickrCoverflow-img{max-width: #{@maxWidth()};}", 0
+
 
 
 class FlickrCoverFlow
-			
+
 	pendingImageSrc = "data:image/png;base64,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"
-	
+
 	endOfStream = false
-	
+
 	touchMoveStep = 70 #px
-	
+
 	version = "0.5.3"
-	
-	isMobile =-> $.os.ios or $.os.android or $.os.webos or $.os.touchpad or $.os.iphone or $.os.ipad or ($.os.blackberry and /7\.[1-9]\d*/g.test($.os.version))
+
+	isMobile =-> "touchstart" in window
 
 	previousButton: ".flickrCoverflow-previous"
 	nextButton: ".flickrCoverflow-next"
 	pageSize: 7
-	source: "http://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&nojsoncallback=1&extras=url_t,url_s,url_m"
+	source: "https://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&nojsoncallback=1&extras=url_t,url_s,url_m"
 
 	constructor: (@apiKey, @user, @htmlNode, @options = size:"tiny") ->
 		log?.info "Coverflow html node: <#{@htmlNode.prop? 'tagName'}:#{@htmlNode.selector}/>"
@@ -307,7 +346,7 @@ class FlickrCoverFlow
 		log?.trace("@htmlNode properties: \n#{property}: #{value}") for property, value of @htmlNode if logLevelIsTrace?()
 
 	version: -> version
-		
+
 	createImageTemplate: ->
 		@htmlNode.html """
 			<div class="flickrCoverflow-previous"></div>
@@ -334,9 +373,9 @@ class FlickrCoverFlow
 							url_t: pendingImageSrc
 							url_s: pendingImageSrc
 							url_m: pendingImageSrc
-							
+
 						@photos.push photo for i in [0..2]
-							
+
 					@photos.push photo for photo in data.photos.photo
 					log?.debug "#{@photos.length} loaded"
 					log?.debug "#{data.photos.total} photos to handle"
@@ -350,45 +389,45 @@ class FlickrCoverFlow
 	appendPhoto: (photo, callback=null) ->
 		log?.debug "append photo"
 		image = @createImageFrom photo
-		
+
 		$("img", image).error ->
 			log?.error "Cannot load '#{photo.title}' (#{$(this).attr 'src'})"
 			$(this).off("error").attr "src", pendingImageSrc
 			$(".flickrCoverflow-title", image).show()
-		
+
 		@htmlNode.append(image)
-	
+
 	createImageFrom: (photo)->
 		log?.debug "photo: #{photo.title}, #{@style.url()}: #{photo[@style.url()]}"
 		image = $(".#{@style.imageContainer}[data-template=yes]").clone()
-		
+
 		image.attr(
 			"data-template":"no"
 			"data-show":"yes"
 			title: photo.title
 			"data-zoom-url": photo[@style.urlZoom()]
 		)
-		
+
 		innerImg = $("img", image)
 		innerImg.attr "src":photo[@style.url()], "alt":photo.title
 		$(".flickrCoverflow-title", image).text photo.title
 		image.css "display":"none" if photo.placeHolder
 		image
-		
+
 	attachEvents: ->
 		log?.debug "median = #{@median}"
 		log?.debug "offset in attachEvents: #{@offset}"
-		
+
 		if isMobile()
 			@attachTouchEvents()
 		else
 			@attachNextEvent()
 			@attachPreviousEvent()
-		
+
 	attachNextEvent: -> $(@nextButton, @htmlNode).bind("mousedown", =>@next()).css("cursor", "pointer")
 
 	attachPreviousEvent: -> $(@previousButton, @htmlNode).bind("mousedown", =>@previous()).css("cursor", "pointer")
-	
+
 	addZoomEvent: ->
 		triggeringEvent = if isMobile() then "tap" else "click"
 		log?.debug "median image selector: '#{@medianImage}'"
@@ -404,18 +443,18 @@ class FlickrCoverFlow
 					)
 				)
 		)
-	
+
 	hasNext: -> @photos[@offset+@pageSize]
-		
+
 	next: ->
 		log?.debug "next image"
 		log?.debug "offset before next: #{@offset}"
 		log?.trace "nextPhotoIsLoaded: #{@nextPhotoIsLoaded()}" if logLevelIsTrace?()
-		
+
 		if @hasNext()
 			@clearZoomEvent()
 			$(@images).eq(@offset).attr "data-show":"no", "data-position":"none"
-		
+
 			if @nextPhotoIsLoaded()
 				log?.debug "next photo is loaded"
 				@showNextPhoto()
@@ -424,45 +463,45 @@ class FlickrCoverFlow
 			else
 				log?.debug "next photo is NOT loaded"
 				@appendNextPhotoIfAny()
-		
+
 			@setImagesPosition()
 			@addZoomEvent()
-			
+
 		log?.debug "offset after next: #{@offset}"
-				
+
 	nextPhotoIsLoaded: ->
 		methodName = "nextPhotoIsLoaded"
 		log?.debug "#{methodName}: images = #{@images}"
 		log?.debug "#{methodName}: offset = #{@offset}"
 		log?.debug "#{methodName}: pageSize = #{@pageSize}"
 		$(@images).eq(@offset+@pageSize).attr "class"
-			
+
 	clearZoomEvent: -> $(@medianImage, @htmlNode).off "tap click"
-		
+
 	showNextPhoto: ->
 		log?.debug "show photo"
 		$(@images).eq(@offset+@pageSize).attr "data-show":"yes"
-		
+
 	loadNewPageIfPageChanged: ->
 		if !@isSamePage()
 			@page++
 			log?.debug "page #{@page}"
 			@load() if !@nextPhotoIsLoaded()
-			
+
 	isSamePage: -> @offset%@pageSize != 0
-		
+
 	appendNextPhotoIfAny: ->
 		if nextPhoto = @hasNext()
 			log?.debug "photo '#{nextPhoto.title}' exists at index #{@offset+@pageSize}"
 			@offset++
 			@appendPhoto nextPhoto
 			@loadNewPageIfPageChanged()
-		
+
 	setImagesPosition: ->
 		for image, position in $(".#{@style.imageContainer}[data-show='yes']")
 			log?.debug "position + median: #{position}, image: #{image}"
 			$(image).attr "data-position": position
-	
+
 	previous: ->
 		log?.debug "previous image"
 		log?.debug "offset before previous: #{@offset}"
@@ -473,9 +512,9 @@ class FlickrCoverFlow
 			$(@images).eq(@offset).attr "data-show":"yes"
 			@setImagesPosition()
 			@addZoomEvent()
-			
+
 		log?.debug "offset after previous: #{@offset}"
-		
+
 	touchMoveHandler: ->
 		endX = event.targetTouches[0].pageX
 		@deltaX = endX - @startX
@@ -499,7 +538,7 @@ class FlickrCoverFlow
 	attachTouchEvents: ->
 		log?.debug "attaching touch events"
 		log?.debug "@htmlNode.id: #{@htmlNode.attr 'id'}"
-		
+
 		@htmlNode.bind "touchstart", (event) =>
 			@startX = event.targetTouches[0].pageX
 			log?.debug "@startX: #{@startX}"
@@ -519,7 +558,7 @@ do ($) ->
 		copiedOptions = {}
 		copiedOptions[option] = value for option, value of options
 		copiedOptions.onLoad = options.onLoad.bind(@) if options.onLoad
-		
+
 		if @.css("display") != "none"
 			coverflow = new FlickrCoverFlow(
 				apiKey
@@ -527,12 +566,12 @@ do ($) ->
 				@
 				copiedOptions
 			)
-			
+
 			coverflow.load()
-			
+
 			log?.info "flickrCoverflow selector: #{coverflow.htmlNode.selector}"
 		else
 			log?.info "#{@.attr 'id'} is not visible, no need to create coverflow"
-			
+
 		@
 
