@@ -14,12 +14,21 @@
     <!-- Commented to improved performances on mobile devices -->
     <link rel="stylesheet" href="style/flickr-coverflow-fx.css"/>
     <link rel="stylesheet" href="style/app.css"/>
-    <script src="lib/babel-core/browser-polyfill.min.js"></script>
-    <script src="bin/logger.js"></script>
-    <script src="bin/flickr-coverflow.js"></script>
-    <script src="bin/app.js"></script>
   </head>
   <body>
-    <div id="flickr-coverflow"/>
+    <span id="flickr-coverflow" class="coverflow">
+			<div class="flickrCoverflow-outter-frame flickrCoverflow--active" data-template="yes">
+				<div class="flickrCoverflow-inner-frame">
+					<img class="flickrCoverflow-image" src="images/placeholder.png"/>
+					<div class="flickrCoverflow-title">No title</div>
+				</div>
+			</div>
+    </span>
+
+    <script src="lib/babel-core/browser-polyfill.min.js"></script>
+    <script src="bin/logger.js"></script>
+    <script src="bin/coverflow-style.js"></script>
+    <script src="bin/flickr-coverflow.js"></script>
+    <script src="bin/app.js"></script>
   </body>
 </html>
