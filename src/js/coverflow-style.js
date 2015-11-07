@@ -14,6 +14,7 @@ let CoverflowStyle = {
 
 		get "2d"(){
 			return `display: block
+			position: relative
 			min-height: ${this.sizes[this.size].minHeight}px
 			height: 100%
 			width: 100%`;
@@ -27,27 +28,67 @@ let CoverflowStyle = {
 
 	_sheet: {
 		"2d": [
-			`.flickrCoverflow-outter-frame{
-				max-width: 33%;
+			`.flickrCoverflow-frame{
+				margin-left: 33.5%;
+				margin-right: 33.5%;
+				width: 33%;
+				height: 100%;
+			}`,
+			`.flickrCoverflow-frame:not(.flickrCoverflow--active){
+				position: absolute;
+				top: 0;
+				left: 0;
+
+				/* DEBUG */
+				opacity: 0.15;
+			}`,
+			`.flickrCoverflow--visible:nth-child(1){
+				-webkit-transform: translateX(-101.25%);
+				transform: translateX(-101.25%);
+			}`,
+			`.flickrCoverflow--visible:nth-child(2){
+				-webkit-transform: translateX(-66%);
+				transform: translateX(-66%);
+			}`,
+			`.flickrCoverflow--visible:nth-child(3){
+				-webkit-transform: translateX(-33%);
+				transform: translateX(-33%);
+			}`,
+			`.flickrCoverflow--visible:nth-child(5){
+				-webkit-transform: translateX(33%);
+				transform: translateX(33%);
+				z-index: -1;
+			}`,
+			`.flickrCoverflow--visible:nth-child(6){
+				-webkit-transform: translateX(66%);
+				transform: translateX(66%);
+				z-index: -2;
+			}`,
+			`.flickrCoverflow--visible:nth-child(7){
+				-webkit-transform: translateX(101.25%);
+				transform: translateX(101.25%);
+				z-index: -3;
 			}`,
 			`.flickrCoverflow-image{
 				max-width: 100%;
 				max-height: 100%;
 			}`,
-			`.flickrCoverflow-title{
-				font-family: Helvetica;
+			`.flickrCoverflow-inner-frame{
 				text-align: center;
 			}`,
-			`.flickrCoverflow--active{
+			`.flickrCoverflow-title{
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				font-family: Helvetica;
+			}`,
+			`.flickrCoverflow--visible{
 				display: block;
 			}`
 		],
 
-		"3d": [
-			/*`.flickrCoverflow-page.flickrCoverflow--active:nth-child(1){
-
-			}`*/
-		]
+		"3d": []
 	},
 
 
