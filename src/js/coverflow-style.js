@@ -25,7 +25,6 @@ let CoverflowStyle = {
 		transformStyle: preserve-3d`
 	},
 
-
 	_sheet: {
 		"2d": [
 			`.flickrCoverflow-frame{
@@ -34,13 +33,17 @@ let CoverflowStyle = {
 				width: 33%;
 				height: 100%;
 			}`,
+			`.flickrCoverflow-inner-frame{
+				display: block;
+				height: 100%;
+			}`,
 			`.flickrCoverflow-frame:not(.flickrCoverflow--active){
 				position: absolute;
 				top: 0;
 				left: 0;
-
-				/* DEBUG */
-				opacity: 0.15;
+			}`,
+			`.flickrCoverflow--active{
+				position: relative;
 			}`,
 			`.flickrCoverflow--visible:nth-child(1){
 				-webkit-transform: translateX(-101.25%);
@@ -72,6 +75,7 @@ let CoverflowStyle = {
 			`.flickrCoverflow-image{
 				max-width: 100%;
 				max-height: 100%;
+				vertical-align: middle;
 			}`,
 			`.flickrCoverflow-inner-frame{
 				text-align: center;
