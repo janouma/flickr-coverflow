@@ -28,23 +28,14 @@ let CoverflowStyle = {
 	_sheet: {
 		"2d": [
 			`.flickrCoverflow-frame{
+				position: absolute;
+				top: 0;
+				left: 0;
+
 				margin-left: 33.5%;
 				margin-right: 33.5%;
 				width: 33%;
 				height: 100%;
-			}`,
-			`.flickrCoverflow-inner-frame{
-				display: block;
-				height: 100%;
-				text-align: center;
-			}`,
-			`.flickrCoverflow-frame:not(.flickrCoverflow--active){
-				position: absolute;
-				top: 0;
-				left: 0;
-			}`,
-			`.flickrCoverflow--active{
-				position: relative;
 			}`,
 			`.flickrCoverflow--visible:nth-child(1){
 				-webkit-transform: translateX(-101.25%);
@@ -73,7 +64,16 @@ let CoverflowStyle = {
 				transform: translateX(101.25%);
 				z-index: -3;
 			}`,
+			`.flickrCoverflow-inner-frame{
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				align-items: center;
+				align-content: center;
+				height: 100%;
+			}`,
 			`.flickrCoverflow-image{
+				flex: 0 1 auto;
 				max-width: 100%;
 				max-height: 100%;
 				vertical-align: middle;
@@ -156,7 +156,9 @@ let CoverflowStyle = {
 
 		Logger.debug("[FlickrCoverflow.CoverflowStyle] - _applyRule - ", {property, value});
 
-		style[property] = value;
+		if( ! style[property] ){
+			style[property] = value;
+		}
 	},
 
 
