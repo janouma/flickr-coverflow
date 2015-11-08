@@ -36,6 +36,7 @@ let CoverflowStyle = {
 			`.flickrCoverflow-inner-frame{
 				display: block;
 				height: 100%;
+				text-align: center;
 			}`,
 			`.flickrCoverflow-frame:not(.flickrCoverflow--active){
 				position: absolute;
@@ -76,9 +77,6 @@ let CoverflowStyle = {
 				max-width: 100%;
 				max-height: 100%;
 				vertical-align: middle;
-			}`,
-			`.flickrCoverflow-inner-frame{
-				text-align: center;
 			}`,
 			`.flickrCoverflow-title{
 				position: absolute;
