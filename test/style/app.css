@@ -1,4 +1,6 @@
-.coverflow {
+#flickr-coverflow {
+	height: 33vw;
+
 	/* DEBUG */
 	background-color: magenta;
 	/**/

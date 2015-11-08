@@ -3,7 +3,7 @@ let CoverflowStyle = {
 	_3d: false,
 
 
-	_rules: {
+	_sheet: {
 		size: "small",
 
 		sizes: {
@@ -12,21 +12,14 @@ let CoverflowStyle = {
 			large: {minHeight: 302}
 		},
 
-		get "2d"(){
-			return `display: block
-			position: relative
-			min-height: ${this.sizes[this.size].minHeight}px
-			height: 100%
-			width: 100%`;
-		},
-
-		"3d": `perspective: 1000px
-		webkitTransformStyle: preserve-3d
-		transformStyle: preserve-3d`
-	},
-
-	_sheet: {
-		"2d": [
+		get "2d"() {return [
+			`#${this.containerId}{
+				display: block;
+				position: relative;
+				min-height: ${this.sizes[this.size].minHeight}px;
+				height: 100%;
+				width: 100%;
+			}`,
 			`.flickrCoverflow-frame{
 				position: absolute;
 				top: 0;
@@ -88,27 +81,43 @@ let CoverflowStyle = {
 			`.flickrCoverflow--visible{
 				display: block;
 			}`
-		],
+		];},
 
-		"3d": []
+		get "3d"() {return [
+			`#${this.containerId}{
+				perspective: 1000px;
+				webkitTransformStyle: preserve-3d;
+				transformStyle: preserve-3d;
+			}`
+		];}
 	},
 
 
 	get config(){
 		return {
-			size: this._rules.size,
+			containerId: this._sheet.containerId,
+			size: this._sheet.size,
 			"3d": this._3d
 		};
 	},
 
 
-	set config({size = "small", "3d": d3 = false}){
-		this._rules.size = size;
+	set config({containerId, size = "small", "3d": d3 = false}){
+		if( ! containerId ){
+			throw "containerId is required";
+		}
+
+		this._sheet.containerId = containerId;
+		this._sheet.size = size;
 		this._3d = d3;
 	},
 
 
 	insertSheet(){
+		if( ! this._sheet.containerId ){
+			throw "containerId must be configured first";
+		}
+
 		let head = document.head;
 		let firstStyleElt = head.querySelector("style");
 		let style = document.createElement("style");
@@ -128,36 +137,6 @@ let CoverflowStyle = {
 
 		if(this._3d){
 			this._insertRules(sheet, "3d");
-		}
-	},
-
-
-	applyTo(container){
-		let rules = this._rules;
-		let style = container.style;
-
-		for(let rule of rules["2d"].split("\n")){
-			this._applyRule(style, rule);
-		}
-
-		if(this._3d){
-			for(let rule of rules["3d"].split("\n")){
-				this._applyRule(style, rule);
-			}
-		}
-	},
-
-
-	_applyRule(style, rule){
-		let [property, value] = rule.split(":");
-
-		property = property.trim();
-		value = value.trim();
-
-		Logger.debug("[FlickrCoverflow.CoverflowStyle] - _applyRule - ", {property, value});
-
-		if( ! style[property] ){
-			style[property] = value;
 		}
 	},
 

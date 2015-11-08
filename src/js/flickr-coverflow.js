@@ -5,17 +5,19 @@ class _FlickrCoverflow {
 		{
 			apiKey,
 			user,
-			container,
+			containerId,
 			size = "small",
 			"3d": d3 = false
 		} = {
 			apiKey: undefined,
 			user: undefined,
-			container: undefined,
+			containerId: undefined,
 			size: undefined,
 			"3d": undefined
 		}
 	){
+		let container = document.getElementById(containerId);
+
 		Logger.log("[FlickrCoverflow] - constructor");
 		Logger.debug("[FlickrCoverflow] - constructor - ", {size, d3});
 
@@ -23,17 +25,17 @@ class _FlickrCoverflow {
 		this._validateStringArg("user", user);
 		this._validateStringArg("size", size, ["small", "medium", "large"]);
 
-		if( ! container || ! (container instanceof HTMLElement) ){
+		if( ! container ){
 			throw `parameter container is required and must be an HTMLElement. Actual: ${container}`;
 		}
 
 		CoverflowStyle.config = {
+			containerId,
 			size,
 			"3d": d3
 		};
 
 		CoverflowStyle.insertSheet();
-		CoverflowStyle.applyTo(container);
 	}
 
 
