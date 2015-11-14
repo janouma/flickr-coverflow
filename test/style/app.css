@@ -2,6 +2,16 @@
 	height: 33vw;
 
 	/* DEBUG */
-	background-color: magenta;
+	border: 1px dashed yellow;
+	box-sizing: border-box;
 	/**/
+}
+
+.flickrCoverflow-inner-frame {
+	text-shadow: 0 0 2px white;
+}
+
+.flickrCoverflow-image {
+	border-radius: 3px;
+	box-shadow: 0 -5px 10px rgba(0,0,0,0.35);
 }
