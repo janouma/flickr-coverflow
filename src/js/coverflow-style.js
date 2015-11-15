@@ -18,8 +18,7 @@ let CoverflowStyle = {
 				position: "relative",
 				"min-height": `${this.sizes[this.size].minHeight}px`,
 				height: "100%",
-				width: "100%",
-				overflow: "hidden"
+				width: "100%"
 			},
 
 			".flickrCoverflow-frame": {
@@ -74,19 +73,14 @@ let CoverflowStyle = {
 				"z-index": -3
 			},
 
-			".flickrCoverflow-frame:not(.flickrCoverflow--visible)": {
-				"z-index": -4,
-				"visibility": "hidden"
-			},
-
 			".flickrCoverflow--before": {
-				"-webkit-transform": "translateX(-134.25%)",
-				transform: "translateX(-134.25%)"
+				"-webkit-transform": "translateX(-101.25%)",
+				transform: "translateX(-101.25%)"
 			},
 
 			".flickrCoverflow--after": {
-				"-webkit-transform": "translateX(134.25%)",
-				transform: "translateX(134.25%)"
+				"-webkit-transform": "translateX(101.25%)",
+				transform: "translateX(101.25%)"
 			},
 
 			".flickrCoverflow-inner-frame": {
@@ -114,9 +108,16 @@ let CoverflowStyle = {
 				"font-family": "Helvetica"
 			},
 
+			".flickrCoverflow-frame:not(.flickrCoverflow--visible)": {
+				"z-index": -4,
+				"visibility": "hidden",
+				opacity: 0
+			},
+
 			".flickrCoverflow--visible": {
 				display: "block",
-				visibility: "visible"
+				visibility: "visible",
+				opacity: 1
 			}
 		};},
 
@@ -179,13 +180,13 @@ let CoverflowStyle = {
 			},
 
 			".flickrCoverflow--before": {
-				"-webkit-transform": "translateX(-134.25%) rotateY(45deg)",
-				transform: "translateX(-134.25%) rotateY(45deg)"
+				"-webkit-transform": "translateX(-101.25%) rotateY(45deg)",
+				transform: "translateX(-101.25%) rotateY(45deg)"
 			},
 
 			".flickrCoverflow--after": {
-				"-webkit-transform": "translateX(134.25%) rotateY(-45deg)",
-				transform: "translateX(134.25%) rotateY(-45deg)"
+				"-webkit-transform": "translateX(101.25%) rotateY(-45deg)",
+				transform: "translateX(101.25%) rotateY(-45deg)"
 			}
 		};}
 	},
