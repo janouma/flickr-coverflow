@@ -18,56 +18,74 @@ let CoverflowStyle = {
 				position: "relative",
 				"min-height": `${this.sizes[this.size].minHeight}px`,
 				height: "100%",
-				width: "100%"
+				width: "100%",
+				overflow: "hidden"
 			},
 
 			".flickrCoverflow-frame": {
 				position: "absolute",
 				top: 0,
 				left: 0,
-
 				"margin-left": "33.5%",
 				"margin-right": "33.5%",
 				width: "33%",
 				height: "100%"
 			},
 
-			".flickrCoverflow--visible:nth-child(1)": {
+			".flickrCoverflow-frame[data-template]": {
+				display: "none"
+			},
+
+			".flickrCoverflow--visible[data-index='0']": {
 				"-webkit-transform": "translateX(-101.25%)",
 				transform: "translateX(-101.25%)"
 			},
 
-			".flickrCoverflow--visible:nth-child(2)": {
+			".flickrCoverflow--visible[data-index='1']": {
 				"-webkit-transform": "translateX(-66%)",
 				transform: "translateX(-66%)"
 			},
 
-			".flickrCoverflow--visible:nth-child(3)": {
+			".flickrCoverflow--visible[data-index='2']": {
 				"-webkit-transform": "translateX(-33%)",
 				transform: "translateX(-33%)"
 			},
 
-			".flickrCoverflow--visible:nth-child(4)": {
+			".flickrCoverflow--visible[data-index='3']": {
 				"-webkit-transform": "translateX(0)",
 				transform: "translateX(0)"
 			},
 
-			".flickrCoverflow--visible:nth-child(5)": {
+			".flickrCoverflow--visible[data-index='4']": {
 				"-webkit-transform": "translateX(33%)",
 				transform: "translateX(33%)",
 				"z-index": -1
 			},
 
-			".flickrCoverflow--visible:nth-child(6)": {
+			".flickrCoverflow--visible[data-index='5']": {
 				"-webkit-transform": "translateX(66%)",
 				transform: "translateX(66%)",
 				"z-index": -2
 			},
 
-			".flickrCoverflow--visible:nth-child(7)": {
+			".flickrCoverflow--visible[data-index='6']": {
 				"-webkit-transform": "translateX(101.25%)",
 				transform: "translateX(101.25%)",
 				"z-index": -3
+			},
+
+			".flickrCoverflow-frame:not(.flickrCoverflow--visible)": {
+				"z-index": -4
+			},
+
+			".flickrCoverflow--before": {
+				"-webkit-transform": "translateX(-134.25%)",
+				transform: "translateX(-134.25%)"
+			},
+
+			".flickrCoverflow--after": {
+				"-webkit-transform": "translateX(134.25%)",
+				transform: "translateX(134.25%)"
 			},
 
 			".flickrCoverflow-inner-frame": {
@@ -96,7 +114,8 @@ let CoverflowStyle = {
 			},
 
 			".flickrCoverflow--visible": {
-				display: "block"
+				display: "block",
+				visibility: "visible"
 			}
 		};},
 
@@ -107,54 +126,65 @@ let CoverflowStyle = {
 				"transform-style": "preserve-3d"
 			},
 
-			".flickrCoverflow--visible:nth-child(1)": {
+			".flickrCoverflow--visible[data-index='0']": {
 				"-webkit-transform": "translateX(-101.25%) rotateY(45deg)",
-				transform: "translateX(-101.25%) rotateY(45deg)",
-				"-webkit-transform-origin": "left center",
-				"transform-origin": "left center"
+				transform: "translateX(-101.25%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible:nth-child(2)": {
+			".flickrCoverflow--visible[data-index='1']": {
 				"-webkit-transform": "translateX(-66%) rotateY(45deg)",
-				transform: "translateX(-66%) rotateY(45deg)",
-				"-webkit-transform-origin": "left center",
-				"transform-origin": "left center"
+				transform: "translateX(-66%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible:nth-child(3)": {
+			".flickrCoverflow--visible[data-index='2']": {
 				"-webkit-transform": "translateX(-33%) rotateY(45deg)",
-				transform: "translateX(-33%) rotateY(45deg)",
-				"-webkit-transform-origin": "left center",
-				"transform-origin": "left center"
+				transform: "translateX(-33%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible:nth-child(4)": {
+			".flickrCoverflow--visible[data-index='3']": {
 				"-webkit-transform": "translateX(0) rotateY(0)",
 				transform: "translateX(0) rotateY(0)"
 			},
 
-			".flickrCoverflow--visible:nth-child(5)": {
+			".flickrCoverflow--visible[data-index='4']": {
 				"-webkit-transform": "translateX(33%) rotateY(-45deg)",
-				transform: "translateX(33%) rotateY(-45deg)",
-				"-webkit-transform-origin": "right center",
-				"transform-origin": "right center",
-				"z-index": 0
+				transform: "translateX(33%) rotateY(-45deg)"
 			},
 
-			".flickrCoverflow--visible:nth-child(6)": {
+			".flickrCoverflow--visible[data-index='5']": {
 				"-webkit-transform": "translateX(66%) rotateY(-45deg)",
-				transform: "translateX(66%) rotateY(-45deg)",
-				"-webkit-transform-origin": "right center",
-				"transform-origin": "right center",
-				"z-index": 0
+				transform: "translateX(66%) rotateY(-45deg)"
 			},
 
-			".flickrCoverflow--visible:nth-child(7)": {
+			".flickrCoverflow--visible[data-index='6']": {
 				"-webkit-transform": "translateX(101.25%) rotateY(-45deg)",
-				transform: "translateX(101.25%) rotateY(-45deg)",
+				transform: "translateX(101.25%) rotateY(-45deg)"
+			},
+
+			[`[data-index='0'],
+			[data-index='1'],
+			[data-index='2'],
+			.flickrCoverflow--before`]: {
+				"-webkit-transform-origin": "left center",
+				"transform-origin": "left center"
+			},
+
+			[`[data-index='4'],
+			[data-index='5'],
+			[data-index='6'],
+			.flickrCoverflow--after`]: {
 				"-webkit-transform-origin": "right center",
-				"transform-origin": "right center",
-				"z-index": 0
+				"transform-origin": "right center"
+			},
+
+			".flickrCoverflow--before": {
+				"-webkit-transform": "translateX(-134.25%) rotateY(45deg)",
+				transform: "translateX(-134.25%) rotateY(45deg)"
+			},
+
+			".flickrCoverflow--after": {
+				"-webkit-transform": "translateX(134.25%) rotateY(-45deg)",
+				transform: "translateX(134.25%) rotateY(-45deg)"
 			}
 		};}
 	},
@@ -226,17 +256,22 @@ let CoverflowStyle = {
 
 
 	_insertRules(sheet, rules){
+		let ruleFormater = /\n|\r/g;
+
 		for(let selector of Object.getOwnPropertyNames(rules)){
 			let rule;
 			let ruleParts = [selector, "{"];
 			let properties = rules[selector];
+
+			// Resetting RegExp
+			ruleFormater.lastIndex = 0;
 
 			for(let property of Object.getOwnPropertyNames(properties)){
 				ruleParts.push(property, ":", properties[property], ";");
 			}
 
 			ruleParts.push("}");
-			rule = ruleParts.join("");
+			rule = ruleParts.join("").replace(ruleFormater, "");
 
 			try{
 				Logger.debug("[FlickrCoverflow.CoverflowStyle] - _insertRules - inserting rule", rule);
