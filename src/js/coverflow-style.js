@@ -47,6 +47,11 @@ let CoverflowStyle = {
 				transform: "translateX(-33%)"
 			},
 
+			".flickrCoverflow--visible:nth-child(4)": {
+				"-webkit-transform": "translateX(0)",
+				transform: "translateX(0)"
+			},
+
 			".flickrCoverflow--visible:nth-child(5)": {
 				"-webkit-transform": "translateX(33%)",
 				transform: "translateX(33%)",
@@ -103,13 +108,53 @@ let CoverflowStyle = {
 			},
 
 			".flickrCoverflow--visible:nth-child(1)": {
-				"-webkit-transform": "translateX(-101.25%) rotateY(0)",
-				transform: "translateX(-101.25%) rotateY(0)"
+				"-webkit-transform": "translateX(-101.25%) rotateY(45deg)",
+				transform: "translateX(-101.25%) rotateY(45deg)",
+				"-webkit-transform-origin": "left center",
+				"transform-origin": "left center"
 			},
 
 			".flickrCoverflow--visible:nth-child(2)": {
 				"-webkit-transform": "translateX(-66%) rotateY(45deg)",
-				transform: "translateX(-66%) rotateY(45deg)"
+				transform: "translateX(-66%) rotateY(45deg)",
+				"-webkit-transform-origin": "left center",
+				"transform-origin": "left center"
+			},
+
+			".flickrCoverflow--visible:nth-child(3)": {
+				"-webkit-transform": "translateX(-33%) rotateY(45deg)",
+				transform: "translateX(-33%) rotateY(45deg)",
+				"-webkit-transform-origin": "left center",
+				"transform-origin": "left center"
+			},
+
+			".flickrCoverflow--visible:nth-child(4)": {
+				"-webkit-transform": "translateX(0) rotateY(0)",
+				transform: "translateX(0) rotateY(0)"
+			},
+
+			".flickrCoverflow--visible:nth-child(5)": {
+				"-webkit-transform": "translateX(33%) rotateY(-45deg)",
+				transform: "translateX(33%) rotateY(-45deg)",
+				"-webkit-transform-origin": "right center",
+				"transform-origin": "right center",
+				"z-index": 0
+			},
+
+			".flickrCoverflow--visible:nth-child(6)": {
+				"-webkit-transform": "translateX(66%) rotateY(-45deg)",
+				transform: "translateX(66%) rotateY(-45deg)",
+				"-webkit-transform-origin": "right center",
+				"transform-origin": "right center",
+				"z-index": 0
+			},
+
+			".flickrCoverflow--visible:nth-child(7)": {
+				"-webkit-transform": "translateX(101.25%) rotateY(-45deg)",
+				transform: "translateX(101.25%) rotateY(-45deg)",
+				"-webkit-transform-origin": "right center",
+				"transform-origin": "right center",
+				"z-index": 0
 			}
 		};}
 	},
