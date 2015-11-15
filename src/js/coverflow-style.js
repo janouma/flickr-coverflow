@@ -36,46 +36,47 @@ let CoverflowStyle = {
 				display: "none"
 			},
 
-			".flickrCoverflow--visible[data-index='0']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='0']": {
 				"-webkit-transform": "translateX(-101.25%)",
 				transform: "translateX(-101.25%)"
 			},
 
-			".flickrCoverflow--visible[data-index='1']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='1']": {
 				"-webkit-transform": "translateX(-66%)",
 				transform: "translateX(-66%)"
 			},
 
-			".flickrCoverflow--visible[data-index='2']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='2']": {
 				"-webkit-transform": "translateX(-33%)",
 				transform: "translateX(-33%)"
 			},
 
-			".flickrCoverflow--visible[data-index='3']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='3']": {
 				"-webkit-transform": "translateX(0)",
 				transform: "translateX(0)"
 			},
 
-			".flickrCoverflow--visible[data-index='4']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='4']": {
 				"-webkit-transform": "translateX(33%)",
 				transform: "translateX(33%)",
 				"z-index": -1
 			},
 
-			".flickrCoverflow--visible[data-index='5']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='5']": {
 				"-webkit-transform": "translateX(66%)",
 				transform: "translateX(66%)",
 				"z-index": -2
 			},
 
-			".flickrCoverflow--visible[data-index='6']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='6']": {
 				"-webkit-transform": "translateX(101.25%)",
 				transform: "translateX(101.25%)",
 				"z-index": -3
 			},
 
 			".flickrCoverflow-frame:not(.flickrCoverflow--visible)": {
-				"z-index": -4
+				"z-index": -4,
+				"visibility": "hidden"
 			},
 
 			".flickrCoverflow--before": {
@@ -126,52 +127,52 @@ let CoverflowStyle = {
 				"transform-style": "preserve-3d"
 			},
 
-			".flickrCoverflow--visible[data-index='0']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='0']": {
 				"-webkit-transform": "translateX(-101.25%) rotateY(45deg)",
 				transform: "translateX(-101.25%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible[data-index='1']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='1']": {
 				"-webkit-transform": "translateX(-66%) rotateY(45deg)",
 				transform: "translateX(-66%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible[data-index='2']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='2']": {
 				"-webkit-transform": "translateX(-33%) rotateY(45deg)",
 				transform: "translateX(-33%) rotateY(45deg)"
 			},
 
-			".flickrCoverflow--visible[data-index='3']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='3']": {
 				"-webkit-transform": "translateX(0) rotateY(0)",
 				transform: "translateX(0) rotateY(0)"
 			},
 
-			".flickrCoverflow--visible[data-index='4']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='4']": {
 				"-webkit-transform": "translateX(33%) rotateY(-45deg)",
 				transform: "translateX(33%) rotateY(-45deg)"
 			},
 
-			".flickrCoverflow--visible[data-index='5']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='5']": {
 				"-webkit-transform": "translateX(66%) rotateY(-45deg)",
 				transform: "translateX(66%) rotateY(-45deg)"
 			},
 
-			".flickrCoverflow--visible[data-index='6']": {
+			".flickrCoverflow--visible[data-flickrCoverflow-index='6']": {
 				"-webkit-transform": "translateX(101.25%) rotateY(-45deg)",
 				transform: "translateX(101.25%) rotateY(-45deg)"
 			},
 
-			[`[data-index='0'],
-			[data-index='1'],
-			[data-index='2'],
+			[`[data-flickrCoverflow-index='0'],
+			[data-flickrCoverflow-index='1'],
+			[data-flickrCoverflow-index='2'],
 			.flickrCoverflow--before`]: {
 				"-webkit-transform-origin": "left center",
 				"transform-origin": "left center"
 			},
 
-			[`[data-index='4'],
-			[data-index='5'],
-			[data-index='6'],
+			[`[data-flickrCoverflow-index='4'],
+			[data-flickrCoverflow-index='5'],
+			[data-flickrCoverflow-index='6'],
 			.flickrCoverflow--after`]: {
 				"-webkit-transform-origin": "right center",
 				"transform-origin": "right center"
