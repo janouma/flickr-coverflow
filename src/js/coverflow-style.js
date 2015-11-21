@@ -15,7 +15,7 @@ let CoverflowStyle = {
 		get "2d"() { return `#${this.containerId} {
 				display:block;
 				height:100%;
-				min-height:102px;
+				min-height:${this.sizes[this.size].minHeight}px;
 				position:relative;
 				width:100%;
 			}

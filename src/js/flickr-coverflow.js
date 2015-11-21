@@ -29,6 +29,8 @@ class _FlickrCoverflow {
 			throw `parameter container is required and must be an HTMLElement. Actual: ${container}`;
 		}
 
+		this.container = container;
+
 		CoverflowStyle.config = {
 			containerId,
 			size,
