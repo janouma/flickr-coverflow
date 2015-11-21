@@ -72,8 +72,8 @@ class _FlickrCoverflow {
 
 
 	_insertFirstFrames(){
-		let container = this._container;
 		let template = this._template;
+		let fragment = document.createDocumentFragment();
 
 		for(let index = 0; index < 4; index++){
 			let frame = template.cloneNode(true);
@@ -81,8 +81,10 @@ class _FlickrCoverflow {
 			frame.removeAttribute("data-template");
 			frame.classList.add("flickrCoverflow--visible");
 			frame.setAttribute("data-flickrCoverflow-index", index);
-			container.appendChild(frame);
+			fragment.appendChild(frame);
 		}
+
+		this._container.appendChild(fragment);
 	}
 
 }
