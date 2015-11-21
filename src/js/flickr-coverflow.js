@@ -29,7 +29,7 @@ class _FlickrCoverflow {
 			throw `parameter container is required and must be an HTMLElement. Actual: ${container}`;
 		}
 
-		this.container = container;
+		this._container = container;
 
 		CoverflowStyle.config = {
 			containerId,
@@ -38,6 +38,8 @@ class _FlickrCoverflow {
 		};
 
 		CoverflowStyle.insertSheet();
+		this._insertImageTemplate();
+		this._insertFirstFrames();
 	}
 
 
@@ -50,6 +52,36 @@ class _FlickrCoverflow {
 			if( possibleValues.indexOf(value) < 0 ){
 				throw `parameter ${name} must be one of ${possibleValues}. Actual: ${value}`;
 			}
+		}
+	}
+
+
+	_insertImageTemplate(){
+		let template = this._template = document.createElement("div");
+
+		template.classList.add("flickrCoverflow-frame");
+		template.setAttribute("data-template", "yes");
+
+		template.innerHTML = `<div class="flickrCoverflow-inner-frame">
+				<img class="flickrCoverflow-image" src="${_FlickrCoverflow._placeholder}" />
+				<div class="flickrCoverflow-title">No title</div>
+			</div>`;
+
+		this._container.appendChild(template);
+	}
+
+
+	_insertFirstFrames(){
+		let container = this._container;
+		let template = this._template;
+
+		for(let index = 0; index < 4; index++){
+			let frame = template.cloneNode(true);
+
+			frame.removeAttribute("data-template");
+			frame.classList.add("flickrCoverflow--visible");
+			frame.setAttribute("data-flickrCoverflow-index", index);
+			container.appendChild(frame);
 		}
 	}
 
