@@ -39,7 +39,7 @@ class _FlickrCoverflow {
 
 		CoverflowStyle.insertSheet();
 		this._insertImageTemplate();
-		this._insertFirstFrames();
+		this._insertFirstFrame();
 	}
 
 
@@ -71,20 +71,15 @@ class _FlickrCoverflow {
 	}
 
 
-	_insertFirstFrames(){
+	_insertFirstFrame(){
 		let template = this._template;
-		let fragment = document.createDocumentFragment();
+		let frame = template.cloneNode(true);
 
-		for(let index = 0; index < 4; index++){
-			let frame = template.cloneNode(true);
+		frame.removeAttribute("data-template");
+		frame.classList.add("flickrCoverflow--visible");
+		frame.setAttribute("data-flickrCoverflow-index", 3);
 
-			frame.removeAttribute("data-template");
-			frame.classList.add("flickrCoverflow--visible");
-			frame.setAttribute("data-flickrCoverflow-index", index);
-			fragment.appendChild(frame);
-		}
-
-		this._container.appendChild(fragment);
+		this._container.appendChild(frame);
 	}
 
 }
