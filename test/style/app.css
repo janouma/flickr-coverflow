@@ -1,5 +1,8 @@
-.coverflow {
-	height: 33vw;
+body{padding: 0;margin: 0;}
+
+.flickrCoverflow {
+	height: 33vh;
+	margin-bottom: 16.5vh;
 
 	/* DEBUG */
 	border: 1px dashed yellow;

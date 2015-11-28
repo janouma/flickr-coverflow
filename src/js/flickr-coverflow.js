@@ -6,14 +6,12 @@ class _FlickrCoverflow {
 			apiKey,
 			user,
 			container,
-			cssClass,
 			size = "small",
 			"3d": d3 = false
 		} = {
 			apiKey: undefined,
 			user: undefined,
 			container: undefined,
-			cssClass: undefined,
 			size: undefined,
 			"3d": undefined
 		}
@@ -21,24 +19,37 @@ class _FlickrCoverflow {
 		Logger.log("[FlickrCoverflow] - constructor");
 		Logger.debug("[FlickrCoverflow] - constructor - ", {size, d3});
 
+		let idAttrName = "data-flickrCoverflow-id";
+
 		this._validateStringArg("apiKey", apiKey);
 		this._validateStringArg("user", user);
-		this._validateStringArg("cssClass", cssClass);
 		this._validateStringArg("size", size, ["small", "medium", "large"]);
 
-		if( ! container || ! (container instanceof HTMLElement) ){
-			throw `parameter container is required and must be an HTMLElement. Actual: ${container}`;
+		if(!container || !(container instanceof HTMLElement)){
+			throw `[FlickrCoverflow] - constructor - parameter container is required and must be an HTMLElement. Actual: ${container}`;
+		}
+
+		if(!container.id || document.querySelectorAll(`#${container.id}`).length > 1){
+			throw `[FlickrCoverflow] - constructor - parameter container must have a unique id. Actual: ${container.id}`;
+		}
+
+		if(container.getAttribute(idAttrName)){
+			Logger.warn(`[FlickrCoverflow] - constructor - #${container.id} is already a coverflow`);
+			return;
 		}
 
 		this._container = container;
 
+		container.setAttribute(idAttrName, performance.now());
+
 		CoverflowStyle.config = {
-			cssClass,
+			containerId: container.id,
 			size,
 			"3d": d3
 		};
 
 		CoverflowStyle.insertSheets();
+
 		this._insertImageTemplate();
 		//this._insertFirstFrame();
 	}
@@ -47,11 +58,11 @@ class _FlickrCoverflow {
 	_validateStringArg(name, value, possibleValues){
 		if( ! possibleValues ){
 			if( typeof value !== "string" || ! value.trim() ){
-				throw `parameter ${name} is required and must be a non-empty string. Actual: ${value}`;
+				throw `[FlickrCoverflow] - _validateStringArg - parameter ${name} is required and must be a non-empty string. Actual: ${value}`;
 			}
 		}else{
 			if( possibleValues.indexOf(value) < 0 ){
-				throw `parameter ${name} must be one of ${possibleValues}. Actual: ${value}`;
+				throw `[FlickrCoverflow] - _validateStringArg - parameter ${name} must be one of ${possibleValues}. Actual: ${value}`;
 			}
 		}
 	}
