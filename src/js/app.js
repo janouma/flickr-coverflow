@@ -5,5 +5,5 @@ new FlickrCoverflow({
 	user: "12143321@N03",
 	container: document.getElementById("flickr-coverflow"),
 	cssClass: "coverflow",
-	"3d": false
+	"3d": true
 });
