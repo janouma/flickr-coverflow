@@ -33,14 +33,12 @@ class _FlickrCoverflow {
 			throw `[FlickrCoverflow] - constructor - parameter container must have a unique id. Actual: ${container.id}`;
 		}
 
-		if(container.getAttribute(idAttrName)){
+		if(container.classList.contains(CoverflowSheetList.cssClass)){
 			Logger.warn(`[FlickrCoverflow] - constructor - #${container.id} is already a coverflow`);
 			return;
 		}
 
 		this._container = container;
-
-		container.setAttribute(idAttrName, performance.now());
 
 		CoverflowStyle.config = {
 			containerId: container.id,
@@ -50,8 +48,8 @@ class _FlickrCoverflow {
 
 		CoverflowStyle.insertSheets();
 
-		this._insertImageTemplate();
-		//this._insertFirstFrame();
+		this._createImageTemplate();
+		this._insertFirstFrame();
 	}
 
 
@@ -68,7 +66,7 @@ class _FlickrCoverflow {
 	}
 
 
-	_insertImageTemplate(){
+	_createImageTemplate(){
 		let template = this._template = document.createElement("div");
 
 		template.classList.add("flickrCoverflow-frame");
@@ -78,8 +76,6 @@ class _FlickrCoverflow {
 				<img class="flickrCoverflow-image" src="${_FlickrCoverflow._placeholder}" />
 				<div class="flickrCoverflow-title">No title</div>
 			</div>`;
-
-		this._container.appendChild(template);
 	}
 
 
