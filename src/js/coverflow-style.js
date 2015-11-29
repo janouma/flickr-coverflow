@@ -36,7 +36,6 @@ let CoverflowStyle = {
 		let d2Id = `${cssClass}-sheet-2D`;
 		let d2Style;
 		let d3ContainerId = `${containerId}-3D`;
-		let d3ContainerStyle;
 		let d3Id = `${containerId}-sheet-3D`;
 
 		if(!(d2ContainerStyle = document.getElementById(d2ContainerId))){
@@ -48,10 +47,7 @@ let CoverflowStyle = {
 		}
 
 		if(this._3d){
-			if(!(d3ContainerStyle = document.getElementById(d3ContainerId))){
-				d3ContainerStyle = this._insertSheet(d3ContainerId, this._sheetList.container3DSheet, d2Style);
-			}
-
+			let d3ContainerStyle = this._insertSheet(d3ContainerId, this._sheetList.container3DSheet, d2Style);
 			this._insertSheet(d3Id, this._sheetList.frame3DSheet, d3ContainerStyle);
 		}
 	},
