@@ -29,14 +29,18 @@ let CoverflowStyle = {
 
 		this._addCssClass();
 
+		const containerIdsAttribute = "container-ids";
+
 		let containerId = this._sheetList.containerId;
 		let cssClass = CoverflowSheetList.cssClass;
 		let d2ContainerId = `${cssClass}-2D`;
 		let d2ContainerStyle;
 		let d2Id = `${cssClass}-sheet-2D`;
 		let d2Style;
-		let d3ContainerId = `${containerId}-3D`;
-		let d3Id = `${containerId}-sheet-3D`;
+		let d3ContainerId = `${cssClass}-3D`;
+		let d3ContainerStyle;
+		let d3Id = `${cssClass}-sheet-3D`;
+		let d3Style;
 
 		if(!(d2ContainerStyle = document.getElementById(d2ContainerId))){
 			d2ContainerStyle = this._insertSheet(d2ContainerId, this._sheetList.container2DSheet);
@@ -47,8 +51,41 @@ let CoverflowStyle = {
 		}
 
 		if(this._3d){
-			let d3ContainerStyle = this._insertSheet(d3ContainerId, this._sheetList.container3DSheet, d2Style);
-			this._insertSheet(d3Id, this._sheetList.frame3DSheet, d3ContainerStyle);
+			if(!(d3ContainerStyle = document.getElementById(d3ContainerId))){
+				d3ContainerStyle = this._insertSheet(
+					d3ContainerId,
+					this._sheetList.getContainer3DSheet(containerId),
+					d2Style
+				);
+
+				d3ContainerStyle.setAttribute(containerIdsAttribute, containerId);
+			}else{
+				let base64Style;
+				let ids = d3ContainerStyle.getAttribute(containerIdsAttribute).split(",");
+
+				ids.push(containerId);
+				base64Style = btoa(this._sheetList.getContainer3DSheet(...ids));
+				d3ContainerStyle.href = `data:text/css;base64,${base64Style}`;
+				d3ContainerStyle.setAttribute(containerIdsAttribute, ids.join(","));
+			}
+
+			if(!(d3Style = document.getElementById(d3Id))){
+				d3Style = this._insertSheet(
+					d3Id,
+					this._sheetList.getFrame3DSheet(containerId),
+					d3ContainerStyle
+				);
+
+				d3Style.setAttribute(containerIdsAttribute, containerId);
+			}else{
+				let base64Style;
+				let ids = d3Style.getAttribute(containerIdsAttribute).split(",");
+
+				ids.push(containerId);
+				base64Style = btoa(this._sheetList.getFrame3DSheet(...ids));
+				d3Style.href = `data:text/css;base64,${base64Style}`;
+				d3Style.setAttribute(containerIdsAttribute, ids.join(","));
+			}
 		}
 	},
 
