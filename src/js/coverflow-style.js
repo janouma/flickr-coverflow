@@ -33,8 +33,9 @@ let CoverflowStyle = {
 		let cssClass = CoverflowSheetList.cssClass;
 		let d2ContainerId = `${cssClass}-2D`;
 		let d2ContainerStyle;
-		let d2Id = `${containerId}-sheet-2D`;
-		let d3ContainerId = `${cssClass}-3D`;
+		let d2Id = `${cssClass}-sheet-2D`;
+		let d2Style;
+		let d3ContainerId = `${containerId}-3D`;
 		let d3ContainerStyle;
 		let d3Id = `${containerId}-sheet-3D`;
 
@@ -42,7 +43,9 @@ let CoverflowStyle = {
 			d2ContainerStyle = this._insertSheet(d2ContainerId, this._sheetList.container2DSheet);
 		}
 
-		let d2Style = this._insertSheet(d2Id, this._sheetList.frame2DSheet, d2ContainerStyle);
+		if(!(d2Style = document.getElementById(d2Id))){
+			d2Style = this._insertSheet(d2Id, this._sheetList.frame2DSheet, d2ContainerStyle);
+		}
 
 		if(this._3d){
 			if(!(d3ContainerStyle = document.getElementById(d3ContainerId))){
