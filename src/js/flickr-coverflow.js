@@ -16,10 +16,10 @@ class _FlickrCoverflow {
 			"3d": undefined
 		}
 	){
+		let style;
+
 		Logger.log("[FlickrCoverflow] - constructor");
 		Logger.debug("[FlickrCoverflow] - constructor - ", {size, d3});
-
-		let idAttrName = "data-flickrCoverflow-id";
 
 		this._validateStringArg("apiKey", apiKey);
 		this._validateStringArg("user", user);
@@ -40,13 +40,13 @@ class _FlickrCoverflow {
 
 		this._container = container;
 
-		CoverflowStyle.config = {
+		style = new CoverflowStyle({
 			containerId: container.id,
 			size,
 			"3d": d3
-		};
+		});
 
-		CoverflowStyle.insertSheets();
+		style.insertSheets();
 
 		this._createImageTemplate();
 		this._insertFirstFrame();

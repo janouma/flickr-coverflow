@@ -1,7 +1,4 @@
-let CoverflowStyle = {
-
-	_3d: false,
-
+class CoverflowStyle {
 
 	get config(){
 		return this._sheetList && {
@@ -9,17 +6,17 @@ let CoverflowStyle = {
 			size: this._sheetList.size,
 			"3d": this._3d
 		};
-	},
+	}
 
 
-	set config({containerId, size = "small", "3d": d3 = false}){
+	constructor({containerId, size = "small", "3d": d3 = false}){
 		if( ! containerId ){
 			throw "containerId is required";
 		}
 
 		this._sheetList = new CoverflowSheetList({containerId, size});
 		this._3d = d3;
-	},
+	}
 
 
 	insertSheets(){
@@ -87,12 +84,12 @@ let CoverflowStyle = {
 				d3Style.setAttribute(containerIdsAttribute, ids.join(","));
 			}
 		}
-	},
+	}
 
 
 	_addCssClass(){
 		document.getElementById(this._sheetList.containerId).classList.add(CoverflowSheetList.cssClass);
-	},
+	}
 
 
 	_insertSheet(id, content, previous){
@@ -104,7 +101,7 @@ let CoverflowStyle = {
 		base64Style = btoa(content);
 		style.href = `data:text/css;base64,${base64Style}`;
 
-		Logger.debug(`[FlickrCoverflow] - insertSheet - ${id}:`, content);
+		Logger.debug(`[FlickrCoverflow.CoverflowStyle] - insertSheet - ${id}:`, content);
 
 		if(previous){
 			previous.insertAdjacentElement("afterend", style);
