@@ -1,0 +1,32 @@
+{
+  "name": "flickr-coverflow",
+  "version": "2.0.0",
+  "description": "micro lib to display flicker gallery as a coverflow",
+  "main": "dist/index.js",
+  "scripts": {
+   "postinstall": "node tools/postinstall"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janouma/flickr-coverflow.git"
+  },
+  "keywords": [
+    "flickr",
+    "coverflow",
+    "gallery"
+  ],
+  "author": "janouma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janouma/flickr-coverflow/issues"
+  },
+  "homepage": "https://github.com/janouma/flickr-coverflow#readme",
+  "devDependencies": {
+    "babel-cli": "^6.8.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.8.0",
+    "babel-polyfill": "^6.8.0"
+  }
+}

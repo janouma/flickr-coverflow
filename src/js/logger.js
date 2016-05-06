@@ -1,63 +1,60 @@
 let Logger = {
-	_level: "info",
+  _level: 'info',
 
-	_levels: [
-		"debug",
-		"log",
-		"info",
-		"warn",
-		"error"
-	],
+  _levels: [
+    'debug',
+    'log',
+    'info',
+    'warn',
+    'error'
+  ],
 
+  get level () {
+    return this._level
+  },
 
-	get level(){
-		return this._level;
-	},
+  set level (newLevel) {
+    let levelIndex
+    let _levels = this._levels
 
+    newLevel = ((newLevel && newLevel.trim()) || '').toLowerCase()
 
-	set level(newLevel){
-		let levelIndex;
-		let _levels = this._levels;
+    if (!newLevel) {
+      throw Error(`[FlickrCoverflow.Logger] - set level - level argument must be provided. actual: "${newLevel}"`)
+    }
 
-		newLevel = ((newLevel && newLevel.trim()) || "").toLowerCase();
+    levelIndex = _levels.indexOf(newLevel)
 
-		if( ! newLevel ){
-			throw `[FlickrCoverflow.Logger] - set level - level argument must be provided. actual: "${newLevel}"`;
-		}
+    if (levelIndex < 0) {
+      throw Error(`[FlickrCoverflow.Logger] - set level - "${newLevel}" log level is not supported`)
+    }
 
-		levelIndex = _levels.indexOf(newLevel);
+    this._level = newLevel
 
-		if(levelIndex < 0){
-			throw `[FlickrCoverflow.Logger] - set level - "${newLevel}" log level is not supported`;
-		}
+    if (levelIndex > 0) {
+      for (let level of _levels.slice(0, levelIndex)) {
+        this[level] = this._noaction
+      }
+    }
 
-		this._level = newLevel;
+    for (let level of _levels.slice(levelIndex)) {
+      this[level] = this._trace.bind(this, level)
+    }
 
-		if(levelIndex > 0){
-			for(let level of _levels.slice(0, levelIndex)){
-				this[level] = this._noaction;
-			}
-		}
+    this.info(`[FlickrCoverflow.Logger] - set level - Level has been set to "${newLevel}"`)
+  },
 
-		for(let level of _levels.slice(levelIndex)){
-			this[level] = this._trace.bind(this, level);
-		}
+  _trace (level, ...params) {
+    if (!(level in console)) {
+      level = 'log'
+    }
+    console[level](...params)
+  },
 
-		this.info(`[FlickrCoverflow.Logger] - set level - Level has been set to "${newLevel}"`);
-	},
+  _noaction() {},
 
-	_trace(level, ...params){
-		if( !(level in console) ){
-			level = "log";
-		}
-		console[level](...params);
-	},
+}
 
-
-	_noaction(){},
-
-};
-
-for(let level of Logger._levels){
-	Logger[level] = Logger._noaction;
+for (let level of Logger._levels) {
+  Logger[level] = Logger._noaction
 }
