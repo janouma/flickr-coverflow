@@ -187,3 +187,5 @@ Request._init = function _init() {
 }
 
 Request._init()
+
+export default Request

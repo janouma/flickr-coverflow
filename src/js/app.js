@@ -1,3 +1,5 @@
+import FlickrCoverflow from 'flickr-coverflow'
+
 FlickrCoverflow.logLevel = 'debug'
 
 new FlickrCoverflow({

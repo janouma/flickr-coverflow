@@ -58,3 +58,5 @@ let Logger = {
 for (let level of Logger._levels) {
   Logger[level] = Logger._noaction
 }
+
+export default Logger

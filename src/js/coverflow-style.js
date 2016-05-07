@@ -1,3 +1,5 @@
+import CoverflowSheetList from 'coverflow-style-list'
+
 class CoverflowStyle {
 
   get config () {
@@ -109,3 +111,5 @@ class CoverflowStyle {
   }
 
 }
+
+export default CoverflowStyle

@@ -1,3 +1,5 @@
+import Request from 'request'
+
 class FlickrDataSource {
 
   constructor ({apiKey, user, size}) {
@@ -34,3 +36,5 @@ class FlickrDataSource {
   }
 
 }
+
+export default FlickrDataSource
