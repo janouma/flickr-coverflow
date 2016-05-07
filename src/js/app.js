@@ -22,3 +22,4 @@ new FlickrCoverflow({
   container: document.getElementById('flickr-coverflow-third'),
   '3d': true
 })
+

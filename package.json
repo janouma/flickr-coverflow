@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "postinstall": "node tools/postinstall",
-    "build:test": "node node_modules/babel-cli/bin/babel src/js --out-file test/bin/bundle.js --source-maps inline"
+    "build:test": "cd src/js ; node ../../node_modules/babel-cli/bin/babel . --out-file ../../test/bin/bundled.js --source-maps inline ; cd -"
   },
   "directories": {
     "example": "example"
@@ -33,6 +33,7 @@
     "es6-micro-loader": "^0.2.1"
   },
   "babel": {
+    "moduleIds": true,
     "presets": [
       "es2015"
     ],

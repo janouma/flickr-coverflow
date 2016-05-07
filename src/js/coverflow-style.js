@@ -1,4 +1,5 @@
-import CoverflowSheetList from 'coverflow-style-list'
+import Logger from 'logger'
+import CoverflowSheetList from 'coverflow-sheet-list'
 
 class CoverflowStyle {
 

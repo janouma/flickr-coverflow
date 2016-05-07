@@ -1,4 +1,5 @@
 import Logger from 'logger'
+import CoverflowSheetList from 'coverflow-sheet-list'
 import CoverflowStyle from 'coverflow-style'
 
 /* Flickr Coverflow 0.1.0 */
