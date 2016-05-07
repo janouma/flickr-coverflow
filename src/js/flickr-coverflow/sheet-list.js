@@ -1,4 +1,13 @@
 class SheetList {
+  static cssClass = 'flickrCoverflow'
+
+  static _frame3dSheetTemplate = "$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='0']{-webkit-transform:translateX(-101.25%) rotateY(45deg);transform:translateX(-101.25%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='1']{-webkit-transform:translateX(-66%) rotateY(45deg);transform:translateX(-66%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='2']{-webkit-transform:translateX(-33%) rotateY(45deg);transform:translateX(-33%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='3']{-webkit-transform:translateX(0) rotateY(0);transform:translateX(0) rotateY(0);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='4']{-webkit-transform:translateX(33%) rotateY(-45deg);transform:translateX(33%) rotateY(-45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='5']{-webkit-transform:translateX(66%) rotateY(-45deg);transform:translateX(66%) rotateY(-45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='6']{-webkit-transform:translateX(101.25%) rotateY(-45deg);transform:translateX(101.25%) rotateY(-45deg);}$IDs [data-flickrCoverflow-index='0'],$IDs [data-flickrCoverflow-index='1'],$IDs [data-flickrCoverflow-index='2'],$IDs .flickrCoverflow--before{-webkit-transform-origin:left center;transform-origin:left center;}$IDs [data-flickrCoverflow-index='4'],$IDs [data-flickrCoverflow-index='5'],$IDs [data-flickrCoverflow-index='6'],$IDs .flickrCoverflow--after{-webkit-transform-origin:right center;transform-origin:right center;}$IDs .flickrCoverflow--before{-webkit-transform:translateX(-101.25%) rotateY(45deg);transform:translateX(-101.25%) rotateY(45deg);}$IDs .flickrCoverflow--after{-webkit-transform:translateX(101.25%) rotateY(-45deg);transform:translateX(101.25%) rotateY(-45deg);}"
+
+  _sizes = {
+    small: { minHeight: 102 },
+    medium: { minHeight: 202 },
+    large: { minHeight: 302 }
+  }
 
   get containerId () {
     return this._containerId
@@ -15,12 +24,6 @@ class SheetList {
   constructor ({containerId, size}) {
     this._containerId = containerId
     this._size = size
-
-    this._sizes = {
-      small: {minHeight: 102},
-      medium: {minHeight: 202},
-      large: {minHeight: 302}
-    }
   }
 
   getContainer3DSheet (...containerIDs) {
@@ -42,9 +45,5 @@ class SheetList {
   }
 
 }
-
-SheetList.cssClass = 'flickrCoverflow'
-
-SheetList._frame3dSheetTemplate = "$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='0']{-webkit-transform:translateX(-101.25%) rotateY(45deg);transform:translateX(-101.25%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='1']{-webkit-transform:translateX(-66%) rotateY(45deg);transform:translateX(-66%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='2']{-webkit-transform:translateX(-33%) rotateY(45deg);transform:translateX(-33%) rotateY(45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='3']{-webkit-transform:translateX(0) rotateY(0);transform:translateX(0) rotateY(0);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='4']{-webkit-transform:translateX(33%) rotateY(-45deg);transform:translateX(33%) rotateY(-45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='5']{-webkit-transform:translateX(66%) rotateY(-45deg);transform:translateX(66%) rotateY(-45deg);}$IDs .flickrCoverflow--visible[data-flickrCoverflow-index='6']{-webkit-transform:translateX(101.25%) rotateY(-45deg);transform:translateX(101.25%) rotateY(-45deg);}$IDs [data-flickrCoverflow-index='0'],$IDs [data-flickrCoverflow-index='1'],$IDs [data-flickrCoverflow-index='2'],$IDs .flickrCoverflow--before{-webkit-transform-origin:left center;transform-origin:left center;}$IDs [data-flickrCoverflow-index='4'],$IDs [data-flickrCoverflow-index='5'],$IDs [data-flickrCoverflow-index='6'],$IDs .flickrCoverflow--after{-webkit-transform-origin:right center;transform-origin:right center;}$IDs .flickrCoverflow--before{-webkit-transform:translateX(-101.25%) rotateY(45deg);transform:translateX(-101.25%) rotateY(45deg);}$IDs .flickrCoverflow--after{-webkit-transform:translateX(101.25%) rotateY(-45deg);transform:translateX(101.25%) rotateY(-45deg);}"
 
 export default SheetList

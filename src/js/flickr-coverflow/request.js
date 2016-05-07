@@ -37,6 +37,39 @@ let Status = {
 }
 
 class Request {
+  static METHODS = Object.freeze({
+    GET: 'GET',
+    PUT: 'PUT',
+    POST: 'POST',
+    DELETE: 'DELETE'
+  })
+
+  static ERRORS = {
+    UNKNOWN: '',
+    UNKNOWN_CLIENT_ERROR: '',
+    UNKNOWN_SERVER_ERROR: ''
+  }
+
+  static DEFAULT_METHOD = Request.METHODS.GET
+
+  static _init() {
+    let errors = Request.ERRORS
+
+    Object.keys(errors).forEach((name) => {
+      if (!errors[name]) {
+        errors[name] = name
+      }
+    })
+
+    Object.keys(Status).filter((id) => {
+      return isNaN(parseInt(id, 10))
+        && Status[id] !== Status.SUCCESS
+        && Status[id] !== Status.NOT_MODIFIED
+    })
+      .forEach((name) => errors[name] = name)
+
+    Request.ERRORS = Object.freeze(errors)
+  }
 
   set method(method) {
     let methods
@@ -188,40 +221,6 @@ class Request {
     error.name = name
     return error
   }
-}
-
-Request.METHODS = Object.freeze({
-  GET: 'GET',
-  PUT: 'PUT',
-  POST: 'POST',
-  DELETE: 'DELETE'
-})
-
-Request.ERRORS = {
-  UNKNOWN: '',
-  UNKNOWN_CLIENT_ERROR: '',
-  UNKNOWN_SERVER_ERROR: ''
-}
-
-Request.DEFAULT_METHOD = Request.METHODS.GET
-
-Request._init = function _init() {
-  let errors = Request.ERRORS
-
-  Object.keys(errors).forEach((name) => {
-    if (!errors[name]) {
-      errors[name] = name
-    }
-  })
-
-  Object.keys(Status).filter((id) => {
-    return isNaN(parseInt(id, 10))
-      && Status[id] !== Status.SUCCESS
-      && Status[id] !== Status.NOT_MODIFIED
-  })
-    .forEach((name) => errors[name] = name)
-
-  Request.ERRORS = Object.freeze(errors)
 }
 
 Request._init()

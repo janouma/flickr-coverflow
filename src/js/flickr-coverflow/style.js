@@ -16,7 +16,7 @@ class Style {
       throw Error('containerId is required')
     }
 
-    this._sheetList = new SheetList({ containerId, size})
+    this._sheetList = new SheetList({containerId, size})
     this._3d = d3
   }
 
