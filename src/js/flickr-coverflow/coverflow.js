@@ -15,6 +15,9 @@ class Coverflow {
     Logger.info('%cFlickr Coverflow 0.1.0', 'font-size:80%;padding:0.2em 0.5em;color:#FFFFD5;background-color:#FF0066;')
   }
 
+  _3d = false
+  _size = 'small'
+
   constructor ({apiKey, user, container, size = 'small', '3d': d3 = false } = {
       apiKey: undefined,
       user: undefined,
@@ -23,8 +26,6 @@ class Coverflow {
       '3d': undefined
     }
   ) {
-    let style
-
     Logger.log('[flickr-coverflow/Coverflow] - constructor')
     Logger.debug('[flickr-coverflow/Coverflow] - constructor - ', {size, d3})
 
@@ -46,17 +47,8 @@ class Coverflow {
     }
 
     this._container = container
-
-    style = new Style({
-      containerId: container.id,
-      size,
-      '3d': d3
-    })
-
-    style.insertSheets()
-
-    this._createImageTemplate()
-    this._insertFirstFrame()
+    this._3d = d3
+    this._size = size
   }
 
   _validateStringArg (name, value, possibleValues) {
@@ -94,6 +86,20 @@ class Coverflow {
     this._container.appendChild(frame)
   }
 
+  init() {
+    let style
+
+    style = new Style({
+      containerId: this._container.id,
+      size: this._size,
+      '3d': this._3d
+    })
+
+    style.insertSheets()
+
+    this._createImageTemplate()
+    this._insertFirstFrame()
+  }
 }
 
 export default Coverflow
