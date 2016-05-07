@@ -1,4 +1,4 @@
-import Request from 'request'
+import Request from 'flickr-coverflow/request'
 
 class FlickrDataSource {
 

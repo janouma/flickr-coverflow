@@ -1,23 +1,23 @@
-import FlickrCoverflow from 'flickr-coverflow'
+import Coverflow from 'flickr-coverflow/coverflow'
 
 export default () => {
-  FlickrCoverflow.logLevel = 'debug'
+  Coverflow.logLevel = 'debug'
 
-  new FlickrCoverflow({
+  new Coverflow({
     apiKey: '526aaaa5cbca4f64991e80ea2c67c1e1',
     user: '12143321@N03',
     container: document.getElementById('flickr-coverflow'),
     '3d': true
   })
 
-  new FlickrCoverflow({
+  new Coverflow({
     apiKey: '526aaaa5cbca4f64991e80ea2c67c1e1',
     user: '12143321@N03',
     container: document.getElementById('flickr-coverflow-bis'),
     '3d': false
   })
 
-  new FlickrCoverflow({
+  new Coverflow({
     apiKey: '526aaaa5cbca4f64991e80ea2c67c1e1',
     user: '12143321@N03',
     container: document.getElementById('flickr-coverflow-third'),

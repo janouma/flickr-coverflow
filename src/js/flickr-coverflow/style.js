@@ -1,7 +1,7 @@
-import Logger from 'logger'
-import CoverflowSheetList from 'coverflow-sheet-list'
+import Logger from 'flickr-coverflow/logger'
+import SheetList from 'flickr-coverflow/sheet-list'
 
-class CoverflowStyle {
+class Style {
 
   get config () {
     return this._sheetList && {
@@ -16,7 +16,7 @@ class CoverflowStyle {
       throw Error('containerId is required')
     }
 
-    this._sheetList = new CoverflowSheetList({ containerId, size})
+    this._sheetList = new SheetList({ containerId, size})
     this._3d = d3
   }
 
@@ -30,7 +30,7 @@ class CoverflowStyle {
     const containerIdsAttribute = 'container-ids'
 
     let containerId = this._sheetList.containerId
-    let cssClass = CoverflowSheetList.cssClass
+    let cssClass = SheetList.cssClass
     let d2ContainerId = `${cssClass}-2D`
     let d2ContainerStyle
     let d2Id = `${cssClass}-sheet-2D`
@@ -88,7 +88,7 @@ class CoverflowStyle {
   }
 
   _addCssClass () {
-    document.getElementById(this._sheetList.containerId).classList.add(CoverflowSheetList.cssClass)
+    document.getElementById(this._sheetList.containerId).classList.add(SheetList.cssClass)
   }
 
   _insertSheet (id, content, previous) {
@@ -100,7 +100,7 @@ class CoverflowStyle {
     base64Style = window.btoa(content)
     style.href = `data:text/css;base64,${base64Style}`
 
-    Logger.debug(`[FlickrCoverflow.CoverflowStyle] - insertSheet - ${id}:`, content)
+    Logger.debug(`[flickr-coverflow/Style] - insertSheet - ${id}:`, content)
 
     if (previous) {
       previous.insertAdjacentElement('afterend', style)
@@ -113,4 +113,4 @@ class CoverflowStyle {
 
 }
 
-export default CoverflowStyle
+export default Style
