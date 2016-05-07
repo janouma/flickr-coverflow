@@ -27,7 +27,9 @@
   <script src="../node_modules/babel-polyfill/dist/polyfill.min.js"></script>
   <script src="bin/bundled.js"></script>
   <script>
-    System.import('app')
+    System.import('app').then(function(app){
+      app.default()
+    })
   </script>
 </body>
 
