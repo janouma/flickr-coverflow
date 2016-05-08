@@ -18,14 +18,19 @@
 	"isShellCommand": true,
 
 	// Show the output window only if unrecognized errors occur.
-	"showOutput": "silent",
+	"showOutput": "always",
 
-	// args is the HelloWorld program to compile.
-	"args": ["run", "build:test"],
+	"args": ["run"],
+	"tasks": [
+		{
+			"taskName": "build:test",
+			"isBuildCommand": true,
+			"problemMatcher": "$eslint-compact"
+		}
+	]
 
 	// use the standard tsc problem matcher to find compile problems
 	// in the output.
-	"problemMatcher": "$eslint-compact"
 }
 
 // A task runner that calls the Typescript compiler (tsc) and
