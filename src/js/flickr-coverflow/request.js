@@ -159,7 +159,7 @@ class Request {
     }
   }
 
-  _onreadystatechange ({httpRequest, parametrizedUrl, resolve, reject}) {
+  _onreadystatechange({httpRequest, parametrizedUrl, resolve, reject}) {
     let response
     let error
 

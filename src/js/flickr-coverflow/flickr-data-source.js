@@ -1,6 +1,7 @@
 import Request from 'flickr-coverflow/request'
 
 class FlickrDataSource {
+  static EMPTY_RESULTS = Object.freeze([])
   _currentPage = 1
   _endOfStream = false
 
@@ -13,7 +14,7 @@ class FlickrDataSource {
 
   nextPage () {
     if (this._endOfStream) {
-      return Promise.resolve([])
+      return Promise.resolve(FlickrDataSource.EMPTY_RESULTS)
     }
 
     return new Request(`${this._source}&page=${this._currentPage++}`)
@@ -30,7 +31,7 @@ class FlickrDataSource {
         if (!this._endOfStream) {
           return data.photos.photo
         } else {
-          return []
+          return FlickrDataSource.EMPTY_RESULTS
         }
       })
   }
