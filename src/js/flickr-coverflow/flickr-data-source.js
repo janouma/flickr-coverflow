@@ -5,11 +5,11 @@ class FlickrDataSource {
   _currentPage = 1
   _endOfStream = false
 
-  constructor ({apiKey, user, size}) {
+  constructor ({apiKey, user, size, pageSize}) {
     this._apiKey = apiKey
     this._user = user
     this._size = size
-    this._source = `https://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&nojsoncallback=1&extras=url_t,url_s,url_m&api_key=${apiKey}&user_id=${user}&per_page=14`
+    this._source = `https://www.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&nojsoncallback=1&extras=url_t,url_s,url_m&api_key=${apiKey}&user_id=${user}&per_page=${pageSize * 2}`
   }
 
   nextPage () {

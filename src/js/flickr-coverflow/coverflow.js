@@ -9,6 +9,8 @@ const INDEX_ATT = 'data-flickrCoverflow-index'
 const VISIBLE_CSS_CLS = 'flickrCoverflow--visible'
 const TEMPLATE_ATT = 'data-template'
 const FRAME_CSS_CLS = 'flickrCoverflow-frame'
+const ZOOM_ATT = 'data-zoom-url'
+const PAGE_SIZE = 7
 
 /* Flickr Coverflow 0.1.0 */
 class Coverflow {
@@ -29,13 +31,34 @@ class Coverflow {
     return 'touchstart' in window
   }
 
+  get _nextImage() {
+    return this._images[offset + PAGE_SIZE]
+  }
+
+  get _nextMounted() {
+    return this._allFrames[this._offset + PAGE_SIZE]
+  }
+
+  get _allFrames() {
+    return this._container.querySelectorAll(`.${FRAME_CSS_CLS}:not([${TEMPLATE_ATT}])`)
+  }
+
+  get _visibleFrames() {
+    return this._container.querySelectorAll(`.${VISIBLE_CSS_CLS}`)
+  }
+
+  get _pageChanged() {
+    return this._offset % PAGE_SIZE === 0
+  }
+
   _3d = false
   _size = 'small'
   _startX = 0
   _deltaX = 0
   _offset = 0
+  _images = []
 
-  constructor({apiKey, user, container, size = 'small', '3d': d3 = false } = {
+  constructor({apiKey, user, container, size = 'medium', '3d': d3 = false } = {
     apiKey: undefined,
     user: undefined,
     container: undefined,
@@ -65,7 +88,7 @@ class Coverflow {
     this._container = container
     this._3d = d3
     this._size = size
-    this._dataSource = new DataSource({ apiKey, user, size })
+    this._dataSource = new DataSource({ apiKey, user, size, pageSize: PAGE_SIZE })
   }
 
   _validateStringArg(name, value, possibleValues) {
@@ -80,7 +103,7 @@ class Coverflow {
     }
   }
 
-  _createImageTemplate() {
+  _createFrameTemplate() {
     let template = this._template = document.createElement('div')
 
     template.classList.add(FRAME_CSS_CLS)
@@ -92,15 +115,58 @@ class Coverflow {
 			</div>`
   }
 
-  _insertFirstFrame() {
+  _insertFrame(position, image) {
     let template = this._template
     let frame = template.cloneNode(true)
 
+    if (image) {
+      let imageNode = frame.querySelector("img.flickrCoverflow-image")
+      let {url, zoom} = this._getImageUrls(image)
+
+      imageNode.setAttribute(ZOOM_ATT, zoom)
+
+      imageNode.addEventListener('error', function errorListener(e){
+        Logger.error(`${Coverflow._CLASS_ID} - _insertFrame - fail to load\
+        image "${url}" due to error ${e}`)
+        imageNode.removeEventListener('error', errorListener)
+        imageNode.setAttribute('src', Coverflow._placeholder)
+      }, false)
+
+      imageNode.setAttribute('src', url)
+    }
+
     frame.removeAttribute(TEMPLATE_ATT)
     frame.classList.add(VISIBLE_CSS_CLS)
-    frame.setAttribute(INDEX_ATT, MEDIAN)
+
+    if (position !== undefined){
+      frame.setAttribute(INDEX_ATT, position)
+    }
 
     this._container.appendChild(frame)
+  }
+
+  _getImageUrls(image) {
+    let zoom
+    let size = this._size
+
+    switch (size){
+      case 'medium': {
+        zoom = 'large'
+        break
+      }
+
+      case 'large': {
+        zoom = 'large'
+        break
+      }
+
+      case 'small':
+      default: {
+        zoom = 'medium'
+      }
+    }
+
+    return {url: image[size], zoom: image[zoom]}
   }
 
   _attachEvents() {
@@ -125,7 +191,7 @@ class Coverflow {
       if (frame.classList.contains(FRAME_CSS_CLS)
         && parseInt(frame.getAttribute(INDEX_ATT), 10) === MEDIAN) {
         Logger.debug(`${Coverflow._CLASS_ID} - _attachZoomEvent - "${eventType}" triggered, about to trigger "zoom"`)
-        let zoomEvent = new Event('zoom', { url: frame.getAttribute('data-zoom-url') })
+        let zoomEvent = new Event('zoom', { url: frame.getAttribute(ZOOM_ATT) })
         frame.dispatchEvent(zoomEvent)
       }
     }, false)
@@ -158,28 +224,77 @@ class Coverflow {
 
     if (deltaX > TOUCH_MOVE_STEP) {
       reset()
-      this._previous()
+      this._previousFrame()
     }
 
     if (deltaX < -TOUCH_MOVE_STEP) {
       reset()
-      this._next()
+      this._nextFrame()
     }
   }
 
-  _previous() {
+  _previousFrame() {
     let offset = this._offset
     Logger.debug(`${Coverflow._CLASS_ID} - _previous - this._offset:`, offset)
 
     if (offset) {
-      //
+      let frames = this._allFrames
+      let lastFrame = frames[offset + PAGE_SIZE - 1]
+      lastFrame.classList.remove(VISIBLE_CSS_CLS)
+      lastFrame.removeAttribute(INDEX_ATT)
       this._offset = --offset
-      //
+      let previous = frames[offset]
+      previous.classList.add(VISIBLE_CSS_CLS)
+      this._setVisibleFramesPosition()
     }
   }
 
-  _next() {
+  _setVisibleFramesPosition() {
+    this._visibleFrames.forEach((frame, position) => {
+      frame.setAttribute(INDEX_ATT, position)
+    })
+  }
+
+  _nextFrame() {
     Logger.debug(`${Coverflow._CLASS_ID} - _next`)
+
+    if (this._nextImage) {
+      let offset = this._offset
+      let frames = this._allFrames
+      let firstFrame = frames[offset]
+
+      firstFrame.classList.remove(VISIBLE_CSS_CLS)
+      firstFrame.removeAttribute(INDEX_ATT)
+
+      if (this._nextMounted) {
+        frames[offset + PAGE_SIZE].classList.add(VISIBLE_CSS_CLS)
+        this._offset = ++offset
+        this._loadNextPageOnChange()
+      } else {
+        this._appendNextFrame()
+      }
+      this._setVisibleFramesPosition()
+    }
+  }
+
+  _loadNextPageOnChange() {
+    if (this._pageChanged && !this._nextMounted) {
+      this._loadNextPage()
+    }
+  }
+
+  _loadNextPage() {
+    //
+  }
+
+  _appendNextFrame() {
+    let nextImage = this._nextImage
+
+    if (nextImage) {
+      this._offset++
+      this._insertFrame(undefined, nextImage)
+      this._loadNextPageOnChange()
+    }
   }
 
   _attachPreviousEvent() {
@@ -201,8 +316,8 @@ class Coverflow {
 
     style.insertSheets()
 
-    this._createImageTemplate()
-    this._insertFirstFrame()
+    this._createFrameTemplate()
+    this._insertFrame(MEDIAN)
     this._attachEvents()
   }
 }
