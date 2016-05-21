@@ -119,12 +119,10 @@ class Request {
 
           httpRequest.onreadystatechange = this._onreadystatechange.bind(
             this,
-            {
-              httpRequest,
-              parametrizedUrl,
-              resolve,
-              reject
-            }
+            httpRequest,
+            parametrizedUrl,
+            resolve,
+            reject
           )
 
           httpRequest.open(this._method || Request.DEFAULT_METHOD, parametrizedUrl)
@@ -159,7 +157,7 @@ class Request {
     }
   }
 
-  _onreadystatechange({httpRequest, parametrizedUrl, resolve, reject}) {
+  _onreadystatechange(httpRequest, parametrizedUrl, resolve, reject) {
     let response
     let error
 
@@ -170,7 +168,7 @@ class Request {
           {
 
             response = {
-              text,
+              text: httpRequest.responseText,
 
               get headers() {
                 var responseHeaders = {}

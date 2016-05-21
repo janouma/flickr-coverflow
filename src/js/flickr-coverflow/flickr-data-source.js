@@ -1,3 +1,4 @@
+import Logger from 'flickr-coverflow/logger'
 import Request from 'flickr-coverflow/request'
 
 class FlickrDataSource {
@@ -24,7 +25,7 @@ class FlickrDataSource {
         this._endOfStream = !data.photos.photo.length
 
         Logger.debug('[FlickrCoverflow.FlickrDataSource] - nextPage -', {
-          loaded: data.photo.length,
+          loaded: data.photos.photo.length,
           total: data.photos.total
         })
 

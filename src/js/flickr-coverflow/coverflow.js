@@ -13,6 +13,7 @@ const ZOOM_ATT = 'data-zoom-url'
 const PAGE_SIZE = 7
 const PREVIOUS = 'previous'
 const NEXT = 'next'
+const Ø = Object.create(null)
 
 /* Flickr Coverflow 0.1.0 */
 class Coverflow {
@@ -35,7 +36,7 @@ class Coverflow {
   }
 
   get _nextImage() {
-    return this._images[offset + PAGE_SIZE]
+    return this._images[this._offset + PAGE_SIZE]
   }
 
   get _nextMounted() {
@@ -43,11 +44,11 @@ class Coverflow {
   }
 
   get _allFrames() {
-    return this._container.querySelectorAll(`.${FRAME_CSS_CLS}:not([${TEMPLATE_ATT}])`)
+    return Array.from(this._container.querySelectorAll(`.${FRAME_CSS_CLS}:not([${TEMPLATE_ATT}])`))
   }
 
   get _visibleFrames() {
-    return this._container.querySelectorAll(`.${VISIBLE_CSS_CLS}`)
+    return Array.from(this._container.querySelectorAll(`.${VISIBLE_CSS_CLS}`))
   }
 
   get _pageChanged() {
@@ -60,6 +61,7 @@ class Coverflow {
   _deltaX = 0
   _offset = 0
   _images = []
+  _initialized = false
 
   constructor({apiKey, user, container, size = 'medium', '3d': d3 = false } = {
     apiKey: undefined,
@@ -118,34 +120,34 @@ class Coverflow {
 			</div>`
   }
 
-  _insertFrame(position, image) {
+  _insertFrame(image) {
     let template = this._template
     let frame = template.cloneNode(true)
 
-    if (image) {
-      let imageNode = frame.querySelector("img.flickrCoverflow-image")
-      let {url, zoom} = this._getImageUrls(image)
+    let imageNode = frame.querySelector("img.flickrCoverflow-image")
+    let {url, zoom} = this._getImageUrls(image)
 
-      imageNode.setAttribute(ZOOM_ATT, zoom)
+    imageNode.setAttribute(ZOOM_ATT, zoom)
+    imageNode.setAttribute('title', image.title)
+    imageNode.setAttribute('alt', image.title)
+    imageNode.style.backgroundImage = `url(${Coverflow._placeholder})`
 
-      imageNode.addEventListener('error', function errorListener(e){
-        Logger.error(`${Coverflow._CLASS_ID} - _insertFrame - fail to load\
+    imageNode.addEventListener('error', function errorListener(e) {
+      Logger.error(`${Coverflow._CLASS_ID} - _insertFrame - fail to load\
         image "${url}" due to error ${e}`)
-        imageNode.removeEventListener('error', errorListener)
-        imageNode.setAttribute('src', Coverflow._placeholder)
-      }, false)
+      imageNode.removeEventListener('error', errorListener)
+      imageNode.setAttribute('src', Coverflow._placeholder)
+    }, false)
 
-      imageNode.setAttribute('src', url)
-    }
+    imageNode.addEventListener('load', () => {
+      imageNode.style.backgroundImage = ''
+    }, false)
 
+    imageNode.setAttribute('src', url)
     frame.removeAttribute(TEMPLATE_ATT)
-    frame.classList.add(VISIBLE_CSS_CLS)
-
-    if (position !== undefined){
-      frame.setAttribute(INDEX_ATT, position)
-    }
 
     this._container.appendChild(frame)
+    return frame
   }
 
   _getImageUrls(image) {
@@ -291,7 +293,7 @@ class Coverflow {
 
     if (nextImage) {
       this._offset++
-      this._insertFrame(undefined, nextImage)
+      this._insertFrame(nextImage)
       this._loadNextPageOnChange()
     }
   }
@@ -318,23 +320,70 @@ class Coverflow {
   }
 
   loadNextPage() {
-    //
+    this._dataSource.nextPage().then(rawImages => {
+      let images = this._images
+      let imagesCount = images.length
+      let firstLoad = imagesCount === 0
+
+
+      images.push(...rawImages.map(rawImage => {
+        let image = {
+          title: rawImage.title,
+          small: rawImage.url_t,
+          medium: rawImage.url_s,
+          large: rawImage.url_m
+        }
+
+        let frame = this._insertFrame(image)
+
+        if (imagesCount++ < PAGE_SIZE) {
+          Logger.debug(`${Coverflow._CLASS_ID} - loadNextPage - imagesCount: ${imagesCount}`)
+          frame.classList.add(VISIBLE_CSS_CLS)
+        }
+
+        return image
+      }))
+
+      this._setVisibleFramesPosition()
+
+      if (firstLoad && typeof this._onInit === 'function') {
+        this._onInit.call(Ø)
+      }
+
+      if (typeof this._onLoad === 'function') {
+        this._onLoad.call(Ø)
+      }
+    })
+  }
+
+  onInit(listener) {
+    this._onInit = listener
+  }
+
+  onLoad(listener) {
+    this._onLoad = listener
   }
 
   init() {
-    let style
+    if (!this._initialized) {
+      let style
 
-    style = new Style({
-      containerId: this._container.id,
-      size: this._size,
-      '3d': this._3d
-    })
+      style = new Style({
+        containerId: this._container.id,
+        size: this._size,
+        '3d': this._3d
+      })
 
-    style.insertSheets()
+      style.insertSheets()
 
-    this._createFrameTemplate()
-    this._insertFrame(MEDIAN)
-    this._attachEvents()
+      this._createFrameTemplate()
+      this._attachEvents()
+      this.loadNextPage()
+
+      this._initialized = true
+    } else {
+      Logger.warn(`${Coverflow._CLASS_ID} - init - already initialized`)
+    }
   }
 }
 
