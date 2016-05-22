@@ -32,7 +32,7 @@ class Coverflow {
   }
 
   static get _touchEnabled() {
-    return 'touchstart' in window
+    return 'ontouchstart' in window
   }
 
   get _nextImage() {
