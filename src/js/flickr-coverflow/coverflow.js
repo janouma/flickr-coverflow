@@ -126,11 +126,12 @@ class Coverflow {
 
     let imageNode = frame.querySelector("img.flickrCoverflow-image")
     let {url, zoom} = this._getImageUrls(image)
+    let title = frame.querySelector(".flickrCoverflow-title")
 
     imageNode.setAttribute(ZOOM_ATT, zoom)
-    imageNode.setAttribute('title', image.title)
     imageNode.setAttribute('alt', image.title)
     imageNode.style.backgroundImage = `url(${Coverflow._placeholder})`
+    title.textContent = image.title
 
     imageNode.addEventListener('error', function errorListener(e) {
       Logger.error(`${Coverflow._CLASS_ID} - _insertFrame - fail to load\
@@ -339,6 +340,7 @@ class Coverflow {
         if (imagesCount++ < PAGE_SIZE) {
           Logger.debug(`${Coverflow._CLASS_ID} - loadNextPage - imagesCount: ${imagesCount}`)
           frame.classList.add(VISIBLE_CSS_CLS)
+          // Handle case when there is only 0 to 3 images
         }
 
         return image

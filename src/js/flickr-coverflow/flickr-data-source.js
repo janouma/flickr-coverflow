@@ -26,7 +26,8 @@ class FlickrDataSource {
 
         Logger.debug('[FlickrCoverflow.FlickrDataSource] - nextPage -', {
           loaded: data.photos.photo.length,
-          total: data.photos.total
+          total: data.photos.total,
+          photo: data.photos.photo
         })
 
         if (!this._endOfStream) {
