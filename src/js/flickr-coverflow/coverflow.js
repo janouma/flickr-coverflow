@@ -4,6 +4,7 @@ import Style from 'flickr-coverflow/style'
 import DataSource from 'flickr-coverflow/flickr-data-source'
 
 const MEDIAN = 3
+const STARTING_FRAME = MEDIAN
 const TOUCH_MOVE_STEP = 70
 const INDEX_ATT = 'data-flickrCoverflow-index'
 const VISIBLE_CSS_CLS = 'flickrCoverflow--visible'
@@ -13,7 +14,7 @@ const ZOOM_ATT = 'data-zoom-url'
 const PAGE_SIZE = 7
 const PREVIOUS = 'previous'
 const NEXT = 'next'
-const Ø = Object.create(null)
+const Ø = Object.freeze(Object.create(null))
 
 /* Flickr Coverflow 0.1.0 */
 class Coverflow {
@@ -36,7 +37,7 @@ class Coverflow {
   }
 
   get _nextImage() {
-    return this._images[this._offset + PAGE_SIZE]
+    return this._images[this._offset + PAGE_SIZE - STARTING_FRAME]
   }
 
   get _nextMounted() {
@@ -120,9 +121,17 @@ class Coverflow {
 			</div>`
   }
 
+  _insertGhostFrame() {
+    let frame = this._template.cloneNode(true)
+    frame.style.visibility = 'hidden'
+    frame.classList.add(VISIBLE_CSS_CLS)
+    frame.removeAttribute(TEMPLATE_ATT)
+    this._container.appendChild(frame)
+    return frame
+  }
+
   _insertFrame(image) {
-    let template = this._template
-    let frame = template.cloneNode(true)
+    let frame = this._template.cloneNode(true)
 
     let imageNode = frame.querySelector("img.flickrCoverflow-image")
     let {url, zoom} = this._getImageUrls(image)
@@ -241,7 +250,6 @@ class Coverflow {
 
   _goToPreviousFrame() {
     let offset = this._offset
-    Logger.debug(`${Coverflow._CLASS_ID} - _previous - this._offset:`, offset)
 
     if (offset) {
       let frames = this._allFrames
@@ -253,6 +261,8 @@ class Coverflow {
       previous.classList.add(VISIBLE_CSS_CLS)
       this._setVisibleFramesPosition()
     }
+
+    Logger.debug(`${Coverflow._CLASS_ID} - _goToPreviousFrame - this._offset:`, offset)
   }
 
   _setVisibleFramesPosition() {
@@ -262,18 +272,16 @@ class Coverflow {
   }
 
   _goToNextFrame() {
-    Logger.debug(`${Coverflow._CLASS_ID} - _next`)
-
     if (this._nextImage) {
       let offset = this._offset
-      let frames = this._allFrames
-      let firstFrame = frames[offset]
+      let firstVisibleFrame = this._allFrames[offset]
+      let nextMounted;
 
-      firstFrame.classList.remove(VISIBLE_CSS_CLS)
-      firstFrame.removeAttribute(INDEX_ATT)
+      firstVisibleFrame.classList.remove(VISIBLE_CSS_CLS)
+      firstVisibleFrame.removeAttribute(INDEX_ATT)
 
-      if (this._nextMounted) {
-        frames[offset + PAGE_SIZE].classList.add(VISIBLE_CSS_CLS)
+      if (nextMounted = this._nextMounted) {
+        nextMounted.classList.add(VISIBLE_CSS_CLS)
         this._offset = ++offset
         this._loadNextPageOnChange()
       } else {
@@ -281,10 +289,12 @@ class Coverflow {
       }
       this._setVisibleFramesPosition()
     }
+
+    Logger.debug(`${Coverflow._CLASS_ID} - _goToNextFrame - this._offset:`, this._offset)
   }
 
   _loadNextPageOnChange() {
-    if (this._pageChanged && !this._nextMounted) {
+    if (this._pageChanged && !this._images[this._offset + PAGE_SIZE]) {
       this.loadNextPage()
     }
   }
@@ -324,8 +334,7 @@ class Coverflow {
     this._dataSource.nextPage().then(rawImages => {
       let images = this._images
       let imagesCount = images.length
-      let firstLoad = imagesCount === 0
-
+      let firstLoad = !imagesCount
 
       images.push(...rawImages.map(rawImage => {
         let image = {
@@ -337,7 +346,7 @@ class Coverflow {
 
         let frame = this._insertFrame(image)
 
-        if (imagesCount++ < PAGE_SIZE) {
+        if (imagesCount++ < PAGE_SIZE - STARTING_FRAME) {
           Logger.debug(`${Coverflow._CLASS_ID} - loadNextPage - imagesCount: ${imagesCount}`)
           frame.classList.add(VISIBLE_CSS_CLS)
           // Handle case when there is only 0 to 3 images
@@ -369,6 +378,7 @@ class Coverflow {
   init() {
     if (!this._initialized) {
       let style
+      let images = this._images
 
       style = new Style({
         containerId: this._container.id,
@@ -380,6 +390,11 @@ class Coverflow {
 
       this._createFrameTemplate()
       this._attachEvents()
+
+      for (let index = STARTING_FRAME; index--;){
+        this._insertGhostFrame()
+      }
+
       this.loadNextPage()
 
       this._initialized = true
