@@ -36,6 +36,10 @@ class Coverflow {
     return 'ontouchstart' in window
   }
 
+  get _bufferEndReached() {
+    return !this._images[this._offset + PAGE_SIZE]
+  }
+
   get _nextImage() {
     return this._images[this._offset + PAGE_SIZE - STARTING_FRAME]
   }
@@ -294,7 +298,7 @@ class Coverflow {
   }
 
   _loadNextPageOnChange() {
-    if (this._pageChanged && !this._images[this._offset + PAGE_SIZE]) {
+    if (this._pageChanged && this._bufferEndReached) {
       this.loadNextPage()
     }
   }
