@@ -128,7 +128,6 @@ class Coverflow {
   _insertGhostFrame() {
     let frame = this._template.cloneNode(true)
     frame.style.visibility = 'hidden'
-    frame.classList.add(VISIBLE_CSS_CLS)
     frame.removeAttribute(TEMPLATE_ATT)
     this._container.appendChild(frame)
     return frame
@@ -353,16 +352,17 @@ class Coverflow {
         if (imagesCount++ < PAGE_SIZE - STARTING_FRAME) {
           Logger.debug(`${Coverflow._CLASS_ID} - loadNextPage - imagesCount: ${imagesCount}`)
           frame.classList.add(VISIBLE_CSS_CLS)
-          // Handle case when there is only 0 to 3 images
         }
 
         return image
       }))
 
-      this._setVisibleFramesPosition()
+      if (firstLoad) {
+        this._setVisibleFramesPosition()
 
-      if (firstLoad && typeof this._onInit === 'function') {
-        this._onInit.call(Ø)
+        if (typeof this._onInit === 'function') {
+          this._onInit.call(Ø)
+        }
       }
 
       if (typeof this._onLoad === 'function') {
@@ -396,7 +396,7 @@ class Coverflow {
       this._attachEvents()
 
       for (let index = STARTING_FRAME; index--;){
-        this._insertGhostFrame()
+        this._insertGhostFrame().classList.add(VISIBLE_CSS_CLS)
       }
 
       this.loadNextPage()
