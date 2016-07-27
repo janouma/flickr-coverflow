@@ -314,14 +314,14 @@ class Coverflow {
   }
 
   _attachPreviousEvent() {
-    this._attachSwithFrameEvent(index => index < MEDIAN, ::this._goToPreviousFrame)
+    this._attachSwitchFrameEvent(index => index < MEDIAN, ::this._goToPreviousFrame)
   }
 
   _attachNextEvent() {
-    this._attachSwithFrameEvent(index => index > MEDIAN, ::this._goToNextFrame)
+    this._attachSwitchFrameEvent(index => index > MEDIAN, ::this._goToNextFrame)
   }
 
-  _attachSwithFrameEvent(check, changeFrame) {
+  _attachSwitchFrameEvent(check, changeFrame) {
     const U_CLICK = Coverflow._UNIVERSAL_CLICK
 
     this._container.addEventListener(U_CLICK, event => {
