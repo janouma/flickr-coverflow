@@ -1,5 +1,4 @@
-.flickrCoverflow-image-container,
-.flickrCoverflow-image {
+.flickrCoverflow-frame {
 	transition: all .5s;
 	-moz-transition: all .5s;
 	-webkit-transition: all .5s;
