@@ -11,7 +11,7 @@ class Style {
     }
   }
 
-  constructor ({containerId, size = 'small', '3d': d3 = false }) {
+  constructor ({ containerId, size = 'small', '3d': d3 = false }) {
     if (!containerId) {
       throw Error('containerId is required')
     }
