@@ -127,7 +127,7 @@ class Coverflow {
 
   _insertGhostFrame() {
     let frame = this._template.cloneNode(true)
-    frame.style.visibility = 'hidden'
+    frame.style.display = 'none'
     frame.removeAttribute(TEMPLATE_ATT)
     this._container.appendChild(frame)
     return frame
@@ -370,7 +370,9 @@ class Coverflow {
         if (typeof this._onLoad === 'function') {
           this._onLoad.call(Ø)
         }
-      } else {
+      }
+
+      if (rawImages.length < PAGE_SIZE) {
         for (let index = STARTING_FRAME; index--;){
           this._insertGhostFrame()
         }
