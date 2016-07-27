@@ -275,15 +275,16 @@ class Coverflow {
   }
 
   _goToNextFrame() {
-    if (this._nextImage) {
+    let nextMounted = this._nextMounted
+
+    if (this._nextImage || nextMounted) {
       let offset = this._offset
       let firstVisibleFrame = this._allFrames[offset]
-      let nextMounted;
 
       firstVisibleFrame.classList.remove(VISIBLE_CSS_CLS)
       firstVisibleFrame.removeAttribute(INDEX_ATT)
 
-      if (nextMounted = this._nextMounted) {
+      if (nextMounted) {
         nextMounted.classList.add(VISIBLE_CSS_CLS)
         this._offset = ++offset
         this._loadNextPageOnChange()
@@ -365,8 +366,14 @@ class Coverflow {
         }
       }
 
-      if (typeof this._onLoad === 'function') {
-        this._onLoad.call(Ø)
+      if (rawImages.length){
+        if (typeof this._onLoad === 'function') {
+          this._onLoad.call(Ø)
+        }
+      } else {
+        for (let index = STARTING_FRAME; index--;){
+          this._insertGhostFrame()
+        }
       }
     })
   }
