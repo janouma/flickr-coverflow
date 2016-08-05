@@ -54,6 +54,10 @@ class Coverflow {
     return Array.from(this._container.querySelectorAll(`.${VISIBLE_CSS_CLS}`))
   }
 
+  get _rightOfMedian () {
+    return this._visibleFrames[MEDIAN + 1]
+  }
+
   get _pageChanged () {
     return this._offset % PAGE_SIZE === 0
   }
@@ -274,10 +278,14 @@ class Coverflow {
 
   _goToNextFrame () {
     let nextMounted = this._nextMounted
+    let rightOfMedian = this._rightOfMedian
 
-    if (this._nextImage || nextMounted) {
+    if (this._nextImage || (nextMounted && rightOfMedian &&
+      rightOfMedian.style.display !== 'none')) {
       let offset = this._offset
       let firstVisibleFrame = this._allFrames[offset]
+
+      // TODO check also if median frame is the last visible
 
       firstVisibleFrame.classList.remove(VISIBLE_CSS_CLS)
       firstVisibleFrame.removeAttribute(INDEX_ATT)
