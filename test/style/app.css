@@ -18,9 +18,16 @@ body{padding: 0;margin: 0;}
 	box-shadow: 0 -5px 10px rgba(0,0,0,0.35);
 }
 
-.flickrCoverflow--visible[data-flickrCoverflow-index='2'],
-.flickrCoverflow--visible[data-flickrCoverflow-index='4']{
-	cursor:pointer;
+.flickrCoverflow--visible[data-flickrCoverflow-index='0'],
+.flickrCoverflow--visible[data-flickrCoverflow-index='1'],
+.flickrCoverflow--visible[data-flickrCoverflow-index='2']{
+	cursor: w-resize;
+}
+
+.flickrCoverflow--visible[data-flickrCoverflow-index='4'],
+.flickrCoverflow--visible[data-flickrCoverflow-index='5'],
+.flickrCoverflow--visible[data-flickrCoverflow-index='6']{
+	cursor: e-resize;
 }
 
 .flickrCoverflow--visible[data-flickrCoverflow-index='3'] .flickrCoverflow-image{
