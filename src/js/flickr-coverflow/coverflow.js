@@ -2,6 +2,7 @@ import Logger from 'flickr-coverflow/logger'
 import SheetList from 'flickr-coverflow/sheet-list'
 import Style from 'flickr-coverflow/style'
 import DataSource from 'flickr-coverflow/flickr-data-source'
+import Signal from 'flickr-coverflow/signal'
 
 const MEDIAN = 3
 const STARTING_FRAME = MEDIAN
@@ -72,6 +73,11 @@ class Coverflow {
   _initialized = false
   _startTime = Number.NEGATIVE_INFINITY
 
+  _on = {
+    init: new Signal(),
+    load: new Signal()
+  }
+
   constructor ({ apiKey, user, container, size = 'medium', '3d': d3 = false } = {
     apiKey: undefined,
     user: undefined,
@@ -103,6 +109,8 @@ class Coverflow {
     this._3d = d3
     this._size = size
     this._dataSource = new DataSource({ apiKey, user, size, pageSize: PAGE_SIZE })
+
+    this._generateEventRegisterers()
   }
 
   _validateStringArg (name, value, possibleValues) {
@@ -113,6 +121,19 @@ class Coverflow {
     } else {
       if (possibleValues.indexOf(value) < 0) {
         throw Error(`${Coverflow._CLASS_ID} - _validateStringArg - parameter ${name} must be one of ${possibleValues}. Actual: ${value}`)
+      }
+    }
+  }
+
+  _generateEventRegisterers () {
+    for (let event of Object.keys(this._on)) {
+      let methodName = `on${event[0].toUpperCase()}${event.substring(1)}`
+
+      if (!this[methodName]) {
+        this[methodName] = function dynamicEventRegisterer (listener) {
+          this._on[event].register(listener)
+          return { off: () => this._on[event].unregister(listener) }
+        }
       }
     }
   }
@@ -380,16 +401,11 @@ class Coverflow {
 
       if (firstLoad) {
         this._setVisibleFramesPosition()
-
-        if (typeof this._onInit === 'function') {
-          this._onInit.call(Ø)
-        }
+        this._on.init.send()
       }
 
       if (rawImages.length) {
-        if (typeof this._onLoad === 'function') {
-          this._onLoad.call(Ø)
-        }
+        this._on.load.send()
       }
 
       if (rawImages.length < PAGE_SIZE) {
@@ -398,14 +414,6 @@ class Coverflow {
         }
       }
     })
-  }
-
-  onInit (listener) {
-    this._onInit = listener
-  }
-
-  onLoad (listener) {
-    this._onLoad = listener
   }
 
   init () {
