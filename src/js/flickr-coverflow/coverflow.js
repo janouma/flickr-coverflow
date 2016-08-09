@@ -1,7 +1,6 @@
 import Logger from 'flickr-coverflow/logger'
 import SheetList from 'flickr-coverflow/sheet-list'
 import Style from 'flickr-coverflow/style'
-import DataSource from 'flickr-coverflow/flickr-data-source'
 import Signal from 'flickr-coverflow/signal'
 import Validator from 'flickr-coverflow/validator'
 
@@ -90,9 +89,8 @@ class Coverflow {
     next: new Signal()
   }
 
-  constructor ({ apiKey, user, container, size = 'medium', '3d': d3 = false } = {
-    apiKey: undefined,
-    user: undefined,
+  constructor ({ dataSource, container, size = 'medium', '3d': d3 = false } = {
+    dataSource: undefined,
     container: undefined,
     size: undefined,
     '3d': undefined
@@ -100,10 +98,9 @@ class Coverflow {
     Logger.log(`${Coverflow._CLASS_ID} - constructor`)
     Logger.debug(`${Coverflow._CLASS_ID} - constructor -`, { size, d3 })
 
-    let validator = new Validator(Coverflow._CLASS_ID, 'constructor')
+    let validator = new Validator(Coverflow._CLASS_ID).method('constructor')
 
-    validator.checkString({apiKey})
-    validator.checkString({user})
+    validator.checkDefined({dataSource})
     validator.checkString({size}, ['small', 'medium', 'large'])
 
     if (!container || !(container instanceof window.HTMLElement)) {
@@ -122,7 +119,7 @@ class Coverflow {
     this._container = container
     this._3d = d3
     this._size = size
-    this._dataSource = new DataSource({ apiKey, user, pageSize: PAGE_SIZE })
+    this._dataSource = dataSource
 
     this._generateEventRegisterers()
   }
