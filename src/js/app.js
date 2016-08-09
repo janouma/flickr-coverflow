@@ -13,6 +13,8 @@ export default () => {
   coverFlow.onInit(() => console.debug('first Coverflow initialized bis'))
   coverFlow.onLoad(() => console.debug('first Coverflow loaded page'))
   coverFlow.onZoom((event) => console.debug('first Coverflow zoom:', event))
+  coverFlow.onPrevious((event) => console.debug('first Coverflow previous:', event))
+  coverFlow.onNext((event) => console.debug('first Coverflow next:', event))
   coverFlow.init()
 
   coverFlow = new Coverflow({
@@ -38,6 +40,9 @@ export default () => {
     '3d': true
   })
   coverFlow.onInit(() => console.debug('third Coverflow initialized'))
+  coverFlow.onZoom((event) => console.debug('third Coverflow zoom:', event))
+  coverFlow.onPrevious((event) => console.debug('third Coverflow previous:', event))
+  coverFlow.onNext((event) => console.debug('third Coverflow next:', event))
   coverFlow.init()
 }
 

@@ -56,6 +56,10 @@ class Coverflow {
     return Array.from(this._container.querySelectorAll(`.${VISIBLE_CSS_CLS}`))
   }
 
+  get _median () {
+    return this._visibleFrames[MEDIAN]
+  }
+
   get _frameRightOfMedian () {
     return this._visibleFrames[MEDIAN + 1]
   }
@@ -76,7 +80,9 @@ class Coverflow {
   _on = {
     init: new Signal(),
     load: new Signal(),
-    zoom: new Signal()
+    zoom: new Signal(),
+    previous: new Signal(),
+    next: new Signal()
   }
 
   constructor ({ apiKey, user, container, size = 'medium', '3d': d3 = false } = {
@@ -238,6 +244,8 @@ class Coverflow {
 
       this._on.zoom.send({
         frame,
+        frameIndex: this._offset + MEDIAN,
+        imageIndex: this._offset,
         target,
         url: target.getAttribute(ZOOM_ATT)
       })
@@ -309,6 +317,12 @@ class Coverflow {
       let previous = frames[offset]
       previous.classList.add(VISIBLE_CSS_CLS)
       this._setVisibleFramesPosition()
+
+      this._on.previous.send({
+        frame: this._median,
+        frameIndex: offset + MEDIAN,
+        imageIndex: offset
+      })
     }
 
     Logger.debug(`${Coverflow._CLASS_ID} - _goToPreviousFrame - this._offset:`, offset)
@@ -340,6 +354,12 @@ class Coverflow {
         this._appendNextFrame()
       }
       this._setVisibleFramesPosition()
+
+      this._on.next.send({
+        frame: this._median,
+        frameIndex: offset + MEDIAN,
+        imageIndex: offset
+      })
     }
 
     Logger.debug(`${Coverflow._CLASS_ID} - _goToNextFrame - this._offset:`, this._offset)
