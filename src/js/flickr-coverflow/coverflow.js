@@ -75,7 +75,8 @@ class Coverflow {
 
   _on = {
     init: new Signal(),
-    load: new Signal()
+    load: new Signal(),
+    zoom: new Signal()
   }
 
   constructor ({ apiKey, user, container, size = 'medium', '3d': d3 = false } = {
@@ -234,8 +235,12 @@ class Coverflow {
     if (frame.classList.contains(FRAME_CSS_CLS) &&
       parseInt(frame.getAttribute(INDEX_ATT), 10) === MEDIAN) {
       Logger.debug(`${Coverflow._CLASS_ID} - _detectZoom - "zoom" event detected, dispatching event`)
-      let zoomEvent = new window.Event('zoom', { url: frame.getAttribute(ZOOM_ATT) })
-      frame.dispatchEvent(zoomEvent)
+
+      this._on.zoom.send({
+        frame,
+        target,
+        url: target.getAttribute(ZOOM_ATT)
+      })
     }
   }
 

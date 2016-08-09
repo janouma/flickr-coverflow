@@ -12,6 +12,7 @@ export default () => {
   coverFlow.onInit(() => console.debug('first Coverflow initialized'))
   coverFlow.onInit(() => console.debug('first Coverflow initialized bis'))
   coverFlow.onLoad(() => console.debug('first Coverflow loaded page'))
+  coverFlow.onZoom((event) => console.debug('first Coverflow zoom:', event))
   coverFlow.init()
 
   coverFlow = new Coverflow({
