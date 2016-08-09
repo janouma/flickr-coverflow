@@ -1,5 +1,6 @@
 import Coverflow from 'flickr-coverflow/coverflow'
 import FlickrDataSource from 'flickr-coverflow/flickr-data-source'
+import MockDataSource from 'flickr-coverflow/mock-data-source'
 
 export default () => {
   Coverflow.logLevel = 'debug'
@@ -62,6 +63,16 @@ export default () => {
   coverFlow.onZoom((event) => console.debug('third Coverflow zoom:', event))
   coverFlow.onPrevious((event) => console.debug('third Coverflow previous:', event))
   coverFlow.onNext((event) => console.debug('third Coverflow next:', event))
+  coverFlow.init()
+
+  dataSource = new MockDataSource()
+
+  coverFlow = new Coverflow({
+    dataSource,
+    container: document.getElementById('flickr-coverflow-last'),
+    '3d': true
+  })
+
   coverFlow.init()
 }
 

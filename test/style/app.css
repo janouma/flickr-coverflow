@@ -9,13 +9,21 @@ body{padding: 0;margin: 0;}
 	/**/
 }
 
+#flickr-coverflow,
+#flickr-coverflow-third {
+	display: inline-block;
+	margin-left: 0;
+	margin-right: 0;
+	width: 49.5vw;
+}
+
 .flickrCoverflow-inner-frame {
 	text-shadow: 0 0 2px white;
 }
 
 .flickrCoverflow-image {
 	border-radius: 3px;
-	box-shadow: 0 -5px 10px rgba(0,0,0,0.35);
+	box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
 }
 
 .flickrCoverflow--visible[data-flickrCoverflow-index='0'],
