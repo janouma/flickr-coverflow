@@ -266,6 +266,8 @@ class Coverflow {
     let endX = event.targetTouches[0].pageX
     let deltaX = this._deltaX = endX - this._startX
 
+    event.preventDefault()
+
     const reset = () => {
       this._startX = endX
       this._deltaX = deltaX = 0
