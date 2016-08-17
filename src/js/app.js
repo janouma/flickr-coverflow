@@ -59,6 +59,13 @@ export default () => {
     '3d': true
   })
 
+  let joLartist = coverFlow
+  let interval = setInterval(() => {
+    if (!joLartist.next()) {
+      clearInterval(interval)
+    }
+  }, 3000)
+
   coverFlow.onInit(() => console.debug('third Coverflow initialized'))
   coverFlow.onZoom((event) => console.debug('third Coverflow zoom:', event))
   coverFlow.onPrevious((event) => console.debug('third Coverflow previous:', event))

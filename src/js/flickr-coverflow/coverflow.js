@@ -317,6 +317,8 @@ class Coverflow {
         frameIndex: offset + MEDIAN,
         imageIndex: offset
       })
+
+      return true
     }
 
     Logger.debug(`${Coverflow._CLASS_ID} - _goToPreviousFrame - this._offset:`, offset)
@@ -354,6 +356,8 @@ class Coverflow {
         frameIndex: offset + MEDIAN,
         imageIndex: offset
       })
+
+      return true
     }
 
     Logger.debug(`${Coverflow._CLASS_ID} - _goToNextFrame - this._offset:`, this._offset)
@@ -460,6 +464,14 @@ class Coverflow {
     } else {
       Logger.warn(`${Coverflow._CLASS_ID} - init - already initialized`)
     }
+  }
+
+  next () {
+    return this._goToNextFrame()
+  }
+
+  previous () {
+    return this._goToPreviousFrame()
   }
 }
 
