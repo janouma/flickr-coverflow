@@ -13,7 +13,6 @@ const TEMPLATE_ATT = 'data-template'
 const FRAME_CSS_CLS = 'flickrCoverflow-frame'
 const ZOOM_ATT = 'data-zoom-url'
 const PAGE_SIZE = 7
-const Ø = Object.freeze(Object.create(null))
 const CLICK = 'click'
 const TAP_THRESHOLD_DURATION = 100
 
