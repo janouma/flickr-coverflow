@@ -50,5 +50,10 @@
       "transform-class-properties",
       "transform-function-bind"
     ]
-  }
+  },
+  "files": [
+    "dist",
+    "src/js/flickr-coverflow",
+    "tools"
+  ]
 }
