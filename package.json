@@ -9,6 +9,7 @@
   "scripts": {
     "postinstall": "node tools/postinstall",
     "build:test": "cd src/js ; node ../../node_modules/babel-cli/bin/babel . --out-file ../../test/bin/bundled.js --source-maps inline ; cd -",
+    "postbuild:test": "npm run build:prod",
     "build:prod": "cd src/js/flickr-coverflow ; node ../../../node_modules/babel-cli/bin/babel . --out-file ../../../dist/flickr-coverflow-$npm_package_version-min.js --minified && node ../../../node_modules/babel-cli/bin/babel . --out-file ../../../dist/flickr-coverflow-$npm_package_version.js ; cd -",
     "start": "node node_modules/http-server/bin/http-server -p $npm_package_config_port -c-1"
   },
