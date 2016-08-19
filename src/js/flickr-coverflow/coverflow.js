@@ -311,10 +311,13 @@ class Coverflow {
       previous.classList.add(VISIBLE_CSS_CLS)
       this._setVisibleFramesPosition()
 
+      let currentFrame = this._median
+
       this._on.previous.send({
-        frame: this._median,
+        frame: currentFrame,
         frameIndex: offset + MEDIAN,
-        imageIndex: offset
+        imageIndex: offset,
+        url: currentFrame.querySelector('.flickrCoverflow-image').getAttribute(ZOOM_ATT)
       })
 
       return true
@@ -350,10 +353,13 @@ class Coverflow {
       }
       this._setVisibleFramesPosition()
 
+      let currentFrame = this._median
+
       this._on.next.send({
-        frame: this._median,
+        frame: currentFrame,
         frameIndex: offset + MEDIAN,
-        imageIndex: offset
+        imageIndex: offset,
+        url: currentFrame.querySelector('.flickrCoverflow-image').getAttribute(ZOOM_ATT)
       })
 
       return true
