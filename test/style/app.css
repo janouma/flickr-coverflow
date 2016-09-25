@@ -5,7 +5,7 @@ body{padding: 0;margin: 0;}
 	margin-bottom: 11vh;
 
 	/* DEBUG */
-	box-shadow: inset 0 0 0 1px yellow;
+	box-shadow: inset 0 0 1px 0 rgba(255,255,0,0.75);
 	/**/
 }
 
@@ -22,7 +22,7 @@ body{padding: 0;margin: 0;}
 }
 
 .flickrCoverflow-image {
-	border-radius: 3px;
+	border-radius: 2px;
 	box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
 }
 
@@ -41,6 +41,56 @@ body{padding: 0;margin: 0;}
 .flickrCoverflow--visible[data-flickrCoverflow-index='3'] .flickrCoverflow-image{
 	cursor:zoom-in;
 }
+
+#flickr-coverflow .flickrCoverflow-title span {
+	text-shadow: 0 0 1px #000;
+	background: #000;
+	color: #fff;
+	white-space: nowrap;
+	padding: 0 0.35em;
+	line-height: 20px;
+	border-radius: 2px;
+	display: inline-block;
+	text-transform: uppercase;
+	font-size: 7pt;
+}
+
+#flickr-coverflow .flickrCoverflow--visible:not([data-flickrCoverflow-index='3']) .flickrCoverflow-title {
+	opacity: 0;
+	visibility: hidden;
+	transform: scaleY(0);
+	transform-origin: 50% 100%;
+}
+
+#flickr-coverflow .flickrCoverflow-title,
+#flickr-coverflow .flickrCoverflow-image
+ {
+	-webkit-transition-duration: 0.4s;
+  -webkit-transition-timing-function: ease-in-out;
+  -webkit-transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
+
+  -moz-transition-duration: 0.4s;
+  -moz-transition-timing-function: ease-in-out;
+  -moz-transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
+
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+  transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
+}
+
+#flickr-coverflow .flickrCoverflow-image {
+	border: 5px solid #000;
+	box-sizing: border-box;
+}
+
+#flickr-coverflow .flickrCoverflow--visible:not([data-flickrCoverflow-index='3']) .flickrCoverflow-image {
+	filter: grayscale(0.75) sepia(0.75) brightness(0.65) contrast(0.65);
+}
+
+#flickr-coverflow .flickrCoverflow--visible[data-flickrCoverflow-index='3'] .flickrCoverflow-image {
+	border-bottom-width: 20px;
+}
+
 
 /* DEBUG
 .flickrCoverflow-frame {

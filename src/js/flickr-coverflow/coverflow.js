@@ -144,7 +144,7 @@ class Coverflow {
 
     template.innerHTML = `<div class="flickrCoverflow-inner-frame">
 				<img class="flickrCoverflow-image" src="${Coverflow._placeholder}" />
-				<div class="flickrCoverflow-title">No title</div>
+				<div class="flickrCoverflow-title"><span>No title</span></div>
 			</div>`
   }
 
@@ -161,7 +161,7 @@ class Coverflow {
 
     let imageNode = frame.querySelector('img.flickrCoverflow-image')
     let {url, zoom} = this._getImageUrls(image)
-    let title = frame.querySelector('.flickrCoverflow-title')
+    let title = frame.querySelector('.flickrCoverflow-title span')
 
     imageNode.setAttribute(ZOOM_ATT, zoom)
     imageNode.setAttribute('alt', image.title)

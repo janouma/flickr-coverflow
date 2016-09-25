@@ -241,7 +241,7 @@ System.register('flickr-coverflow/coverflow', ['flickr-coverflow/logger', 'flick
             template.classList.add(FRAME_CSS_CLS);
             template.setAttribute(TEMPLATE_ATT, 'yes');
 
-            template.innerHTML = '<div class="flickrCoverflow-inner-frame">\n\t\t\t\t<img class="flickrCoverflow-image" src="' + Coverflow._placeholder + '" />\n\t\t\t\t<div class="flickrCoverflow-title">No title</div>\n\t\t\t</div>';
+            template.innerHTML = '<div class="flickrCoverflow-inner-frame">\n\t\t\t\t<img class="flickrCoverflow-image" src="' + Coverflow._placeholder + '" />\n\t\t\t\t<div class="flickrCoverflow-title"><span>No title</span></div>\n\t\t\t</div>';
           }
         }, {
           key: '_insertGhostFrame',
@@ -264,7 +264,7 @@ System.register('flickr-coverflow/coverflow', ['flickr-coverflow/logger', 'flick
             var url = _getImageUrls2.url;
             var zoom = _getImageUrls2.zoom;
 
-            var title = frame.querySelector('.flickrCoverflow-title');
+            var title = frame.querySelector('.flickrCoverflow-title span');
 
             imageNode.setAttribute(ZOOM_ATT, zoom);
             imageNode.setAttribute('alt', image.title);
