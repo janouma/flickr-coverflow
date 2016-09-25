@@ -1,6 +1,6 @@
 'use strict';
 
-System.register('coverflow', ['flickr-coverflow/logger', 'flickr-coverflow/sheet-list', 'flickr-coverflow/style', 'flickr-coverflow/signal', 'flickr-coverflow/validator'], function (_export, _context) {
+System.register('flickr-coverflow/coverflow', ['flickr-coverflow/logger', 'flickr-coverflow/sheet-list', 'flickr-coverflow/style', 'flickr-coverflow/signal', 'flickr-coverflow/validator'], function (_export, _context) {
   var Logger, SheetList, Style, Signal, Validator, _createClass, MEDIAN, STARTING_FRAME, TOUCH_MOVE_STEP, INDEX_ATT, VISIBLE_CSS_CLS, TEMPLATE_ATT, FRAME_CSS_CLS, ZOOM_ATT, PAGE_SIZE, CLICK, TAP_THRESHOLD_DURATION, Coverflow;
 
   function _toConsumableArray(arr) {
@@ -628,7 +628,7 @@ System.register('coverflow', ['flickr-coverflow/logger', 'flickr-coverflow/sheet
 });
 'use strict';
 
-System.register('flickr-data-source', ['flickr-coverflow/logger', 'flickr-coverflow/request', 'flickr-coverflow/validator'], function (_export, _context) {
+System.register('flickr-coverflow/flickr-data-source', ['flickr-coverflow/logger', 'flickr-coverflow/request', 'flickr-coverflow/validator'], function (_export, _context) {
   var Logger, Request, Validator, _createClass, FlickrDataSource;
 
   function _classCallCheck(instance, Constructor) {
@@ -726,7 +726,7 @@ System.register('flickr-data-source', ['flickr-coverflow/logger', 'flickr-coverf
 });
 'use strict';
 
-System.register('logger', [], function (_export, _context) {
+System.register('flickr-coverflow/logger', [], function (_export, _context) {
   var Logger, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, level;
 
   return {
@@ -861,7 +861,7 @@ System.register('logger', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('mock-data-source', [], function (_export, _context) {
+System.register('flickr-coverflow/mock-data-source', [], function (_export, _context) {
   var _createClass, MockDataSource;
 
   function _classCallCheck(instance, Constructor) {
@@ -947,7 +947,7 @@ System.register('mock-data-source', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('request', [], function (_export, _context) {
+System.register('flickr-coverflow/request', [], function (_export, _context) {
   var _typeof, _createClass, ReadyState, Status, Request;
 
   function _classCallCheck(instance, Constructor) {
@@ -1218,7 +1218,7 @@ System.register('request', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('sheet-list', [], function (_export, _context) {
+System.register('flickr-coverflow/sheet-list', [], function (_export, _context) {
   var _createClass, SheetList;
 
   function _classCallCheck(instance, Constructor) {
@@ -1329,7 +1329,7 @@ System.register('sheet-list', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('signal', [], function (_export, _context) {
+System.register('flickr-coverflow/signal', [], function (_export, _context) {
   var _createClass, Ø, Signal;
 
   function _classCallCheck(instance, Constructor) {
@@ -1431,7 +1431,7 @@ System.register('signal', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('style', ['flickr-coverflow/logger', 'flickr-coverflow/sheet-list'], function (_export, _context) {
+System.register('flickr-coverflow/style', ['flickr-coverflow/logger', 'flickr-coverflow/sheet-list'], function (_export, _context) {
   var Logger, SheetList, _createClass, Style;
 
   function _toConsumableArray(arr) {
@@ -1607,7 +1607,7 @@ System.register('style', ['flickr-coverflow/logger', 'flickr-coverflow/sheet-lis
 });
 'use strict';
 
-System.register('validator', [], function (_export, _context) {
+System.register('flickr-coverflow/validator', [], function (_export, _context) {
   var _createClass, Validator;
 
   function _classCallCheck(instance, Constructor) {
