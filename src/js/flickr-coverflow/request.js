@@ -179,7 +179,7 @@ class Request {
                 })
 
                 // caching processed headers
-                Object.defineProperty(this, 'headers', { value })
+                Object.defineProperty(this, 'headers', { value: responseHeaders })
 
                 return responseHeaders
               }
