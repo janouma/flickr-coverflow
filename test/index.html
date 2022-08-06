@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no, maximum-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta charset="utf-8" />
-  <title>Flickr coverflow</title>
-  <style>
-    body {
-      background-color: #aaa;
-    }
-  </style>
-  <!-- --> <link rel="stylesheet" href="style/flickr-coverflow-animated.css" />
-  <!-- Commented to improved performances on mobile devices -->
-  <link rel="stylesheet" href="style/flickr-coverflow-fx.css" /> <!-- -->
-  <link rel="stylesheet" href="style/app.css" />
-</head>
-
-<body>
-  <span id="flickr-coverflow"></span><span id="flickr-coverflow-third"></span>
-  <div id="flickr-coverflow-bis"></div>
-  <div id="flickr-coverflow-last"></div>
-
-  <script src="../node_modules/es6-promise/dist/promise-1.0.0.min.js"></script>
-  <script src="../node_modules/es6-micro-loader/dist/system-polyfill.min.js"></script>
-  <script src="../node_modules/babel-polyfill/dist/polyfill.min.js"></script>
-  <script src="bin/bundled.js"></script>
-  <script>
-    System.import('app').then(function(app){
-      app.default()
-    })
-  </script>
-</body>
-
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta charset="utf-8" />
+    <title>Flickr coverflow</title>
+    <style>
+      body {
+        background-color: #aaa;
+      }
+    </style>
+    <!-- --> <link rel="stylesheet" href="style/flickr-coverflow-animated.css" />
+    <!-- Commented to improved performances on mobile devices -->
+    <link rel="stylesheet" href="style/flickr-coverflow-fx.css" /> <!-- -->
+    <link rel="stylesheet" href="style/app.css" />
+    <script src="js/app.js" type="module" defer></script>
+  </head>
+  
+  <body>
+    <span id="flickr-coverflow"></span><span id="flickr-coverflow-third"></span>
+    <div id="flickr-coverflow-bis"></div>
+    <div id="flickr-coverflow-last"></div>
+  </body>
 </html>

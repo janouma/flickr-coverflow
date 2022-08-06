@@ -1,6 +1,19 @@
-body{padding: 0;margin: 0;}
+html {
+	height: 100%;
+}
 
-.flickrCoverflow {
+body{
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	/* display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden; */
+}
+
+.flickrCoverflow,
+.fcf {
 	height: 22vh;
 	margin-bottom: 11vh;
 
@@ -17,28 +30,37 @@ body{padding: 0;margin: 0;}
 	width: 50vw;
 }
 
-.flickrCoverflow-inner-frame {
+.flickrCoverflow-inner-frame,
+.fcf-inner-frame {
 	text-shadow: 0 0 2px white;
 }
 
-.flickrCoverflow-image {
+.flickrCoverflow-image,
+.fcf-image {
 	border-radius: 2px;
 	box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
 }
 
 .flickrCoverflow--visible[data-flickrCoverflow-index='0'],
 .flickrCoverflow--visible[data-flickrCoverflow-index='1'],
-.flickrCoverflow--visible[data-flickrCoverflow-index='2']{
+.flickrCoverflow--visible[data-flickrCoverflow-index='2'],
+.fcf--visible[data-fcf-index='0'],
+.fcf--visible[data-fcf-index='1'],
+.fcf--visible[data-fcf-index='2'] {
 	cursor: w-resize;
 }
 
 .flickrCoverflow--visible[data-flickrCoverflow-index='4'],
 .flickrCoverflow--visible[data-flickrCoverflow-index='5'],
-.flickrCoverflow--visible[data-flickrCoverflow-index='6']{
+.flickrCoverflow--visible[data-flickrCoverflow-index='6'],
+.fcf--visible[data-fcf-index='4'],
+.fcf--visible[data-fcf-index='5'],
+.fcf--visible[data-fcf-index='6'] {
 	cursor: e-resize;
 }
 
-.flickrCoverflow--visible[data-flickrCoverflow-index='3'] .flickrCoverflow-image{
+.flickrCoverflow--visible[data-flickrCoverflow-index='3'] .flickrCoverflow-image,
+.fcf--visible[data-fcf-index='3'] .fcf-image {
 	cursor:zoom-in;
 }
 
@@ -61,20 +83,11 @@ body{padding: 0;margin: 0;}
 	transform-origin: 50% 100%;
 }
 
-#flickr-coverflow .flickrCoverflow-title,
-#flickr-coverflow .flickrCoverflow-image
- {
-	-webkit-transition-duration: 0.4s;
-  -webkit-transition-timing-function: ease-in-out;
-  -webkit-transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
-
-  -moz-transition-duration: 0.4s;
-  -moz-transition-timing-function: ease-in-out;
-  -moz-transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
-
-  transition-duration: 0.4s;
-  transition-timing-function: ease-in-out;
-  transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
+#flickr-coverflow :is(.flickrCoverflow-title, .flickrCoverflow-image)
+#flickr-coverflow-third :is(.fcf-title, .fcf-image) {
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in-out;
+	transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
 }
 
 #flickr-coverflow .flickrCoverflow-image {
@@ -90,6 +103,56 @@ body{padding: 0;margin: 0;}
 	border-bottom-width: 20px;
 }
 
+#flickr-coverflow-third .fcf--visible:not(.fcf--median-visible) :is(.fcf-image, .fcf-title) {
+	filter: brightness(60%);
+}
+
+#flickr-coverflow-third :is(
+	.fcf--visible:not(.fcf--first-visible, .fcf--last-visible),
+	.fcf--median-visible:is(.fcf--first-visible,.fcf--last-visible)
+) .fcf-image {
+	box-shadow: calc(var(--shadow-direction) * 15px) 10px 30px rgba(0,0,0,50%);
+}
+
+#flickr-coverflow-third .fcf--first-visible ~ .fcf--visible {
+	--shadow-direction: -1;
+}
+
+#flickr-coverflow-third :is(
+	.fcf--median-visible:not(.fcf--last-visible),
+	.fcf--median-visible ~ .fcf--visible
+) {
+	--shadow-direction: 1;
+}
+
+#flickr-coverflow-third .fcf--median-visible:not(
+	.fcf--first-visible,
+	.fcf--last-visible
+) .fcf-image {
+	box-shadow:
+			15px 10px 30px rgba(0,0,0,75%),
+			-15px 10px 30px rgba(0,0,0,75%);
+}
+
+#flickr-coverflow-third .fcf-title > * {
+	background-color: rgba(0,0,0,75%);
+	white-space: nowrap;
+	padding: 0.125em 0.35em;
+	line-height: 1.75;
+	border-radius: 0.3em;
+	text-transform: uppercase;
+	font-size: 10pt;
+	border: 1px solid rgba(255,255,255,62.5%);
+	letter-spacing: 0.1ch;
+}
+
+#flickr-coverflow-third .fcf-title {
+	transform: translateY(50%);
+	text-overflow: ellipsis;
+	width: 100%;
+	overflow: hidden;
+	color: #ebebeb;
+}
 
 /* DEBUG
 .flickrCoverflow-frame {

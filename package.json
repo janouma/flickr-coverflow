@@ -1,17 +1,18 @@
 {
   "name": "flickr-coverflow",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "micro lib to display flicker gallery as a coverflow",
-  "main": "dist/index.js",
+  "source": "src/index.js",
+  "type": "module",
   "config": {
     "port": 8484
   },
   "scripts": {
     "postinstall": "node tools/postinstall",
-    "build:test": "cd src/js ; node ../../node_modules/babel-cli/bin/babel . --out-file ../../test/bin/bundled.js --source-maps inline ; cd -",
-    "postbuild:test": "npm run build:prod",
-    "build:prod": "cd src/js ; node ../../node_modules/babel-cli/bin/babel flickr-coverflow --out-file ../../dist/flickr-coverflow-$npm_package_version-min.js --minified && node ../../node_modules/babel-cli/bin/babel flickr-coverflow --out-file ../../dist/flickr-coverflow-$npm_package_version.js ; cd -",
-    "start": "node node_modules/http-server/bin/http-server -p $npm_package_config_port -c-1"
+    "build:dev": "microbundle --format=modern --no-pkg-main --no-compress -o dist/$npm_package_name-$npm_package_version-dev.js",
+    "postbuild:dev": "cp dist/$npm_package_name-$npm_package_version-dev.js test/js/$npm_package_name-dev.js",
+    "build:prod": "microbundle --format=modern --no-pkg-main --no-sourcemap -o dist/$npm_package_name-$npm_package_version.js; cp dist/$npm_package_name-$npm_package_version.js demo/js/$npm_package_name.js",
+    "start": "http-server -p $npm_package_config_port -c1"
   },
   "directories": {
     "example": "example"
@@ -32,29 +33,10 @@
   },
   "homepage": "https://github.com/janouma/flickr-coverflow#readme",
   "devDependencies": {
-    "babel-cli": "^6.8.0",
-    "babel-plugin-transform-class-properties": "^6.8.0",
-    "babel-plugin-transform-es2015-modules-systemjs": "^6.8.0",
-    "babel-plugin-transform-function-bind": "^6.8.0",
-    "babel-polyfill": "^6.8.0",
-    "babel-preset-es2015": "^6.13.2",
-    "es6-micro-loader": "^0.2.1",
-    "http-server": "^0.9.0"
-  },
-  "babel": {
-    "moduleIds": true,
-    "presets": [
-      "es2015"
-    ],
-    "plugins": [
-      "transform-es2015-modules-systemjs",
-      "transform-class-properties",
-      "transform-function-bind"
-    ]
+    "http-server": "^0.9.0",
+    "microbundle": "^0.15.0"
   },
   "files": [
-    "dist",
-    "src/js/flickr-coverflow",
-    "tools"
+    "dist"
   ]
 }

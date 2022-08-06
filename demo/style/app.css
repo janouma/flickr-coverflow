@@ -1,0 +1,210 @@
+@font-face {
+	font-family: 'PeterFonts';
+	src: url('../assets/fonts/peter_fonts.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+html {
+	height: 100%;
+}
+
+body{
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	background-color: rgb(0,0,30);
+}
+
+.coverflow-container {
+	height: 100%;
+	width: max-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	
+	-webkit-mask-image: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 5%),
+		rgba(255, 255, 255, 80%) 20%,
+		white 25%, white 75%,
+		rgba(255, 255, 255, 80%) 80%,
+		rgba(255, 255, 255, 5%)
+	);
+	
+	mask-image: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 5%),
+		rgba(255, 255, 255, 80%) 20%,
+		white 25%, white 75%,
+		rgba(255, 255, 255, 80%) 80%,
+		rgba(255, 255, 255, 5%)
+	);
+}
+
+.fcf {
+	height: 50vh;
+	display: inline-block;
+	margin-top: -15vh;
+	margin-left: 0;
+	margin-right: 0;
+	width: 50vw;
+	min-width: 640px;
+}
+
+.fcf--visible {
+	--thin-glow: 0 0 1px 0 #fff;
+}
+
+.fcf-inner-frame {
+	text-shadow: 0 0 2px #fff;
+}
+
+.fcf-image {
+	border-radius: 3px;
+	border: 5px solid #000;
+	box-sizing: border-box;
+}
+
+.fcf--visible[data-fcf-index='0'],
+.fcf--visible[data-fcf-index='1'],
+.fcf--visible[data-fcf-index='2']{
+	cursor: w-resize;
+}
+
+.fcf--visible[data-fcf-index='4'],
+.fcf--visible[data-fcf-index='5'],
+.fcf--visible[data-fcf-index='6']{
+	cursor: e-resize;
+}
+
+.fcf--visible[data-fcf-index='3'] .fcf-image{
+	cursor:zoom-in;
+}
+
+.fcf-title,
+.fcf-image {
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in-out;
+	transition-property: color, background-color, opacity, visibility, height, width, transform, transform-origin, border-width, filter;
+}
+
+.fcf--visible:not(.fcf--median-visible) :is(.fcf-image, .fcf-title) {
+	--side-glow: calc(var(--shadow-direction) * 2px) 0 0 #ccc;
+	filter: brightness(60%);
+}
+
+:is(
+	.fcf--visible:not(.fcf--first-visible, .fcf--last-visible),
+	.fcf--median-visible:is(.fcf--first-visible, .fcf--last-visible)
+) .fcf-image {
+	box-shadow:
+		var(--thin-glow),
+		var(--side-glow, none),
+		calc(var(--shadow-direction) * 15px) 10px 30px rgba(0,0,0,50%);
+}
+
+:is(.fcf--first-visible, .fcf--last-visible) .fcf-image {
+	box-shadow: var(--side-glow, none);
+}
+
+.fcf--first-visible,
+.fcf--first-visible ~ .fcf--visible {
+	--shadow-direction: -1;
+}
+
+.fcf--median-visible:not(.fcf--last-visible),
+.fcf--median-visible ~ .fcf--visible {
+	--shadow-direction: 1;
+}
+
+.fcf--median-visible:not(
+	.fcf--first-visible,
+	.fcf--last-visible
+) .fcf-image {
+	box-shadow:
+		var(--thin-glow),
+		15px 10px 30px rgba(0,0,0,75%),
+		-15px 10px 30px rgba(0,0,0,75%);
+}
+
+.fcf-title {
+	transform: translateY(50%);
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	overflow: visible;
+	color: #ebebeb;
+	font-size: 10pt;
+	
+	/* TODO: use embadded fonts  */
+	
+	/* font-family: "Zapfino"; */
+	/* font-size: 6.5pt; */
+	/* line-height: 2.75; */
+	
+	/* font-family: "Oriya MN"; */
+	/* font-size: 12pt; */
+	
+	/* font-family: "Friedrich Condensed"; */
+	/* font-size: 16pt; */
+	
+	/* font-family: "Cristian Church"; */
+	/* font-size: 13pt; */
+	
+	/* ⭐⭐⭐⭐ */
+	/* font-family: "Denyut"; */
+	
+	/* ⭐⭐⭐ */
+	/* font-family: "Kunika"; */
+	/* font-size: 12pt; */
+	
+	/* font-family: "Press Jobs"; */
+	/* font-size: 12pt; */
+	
+	/* font-family: "Oseberg"; */
+	
+	/* ⭐⭐⭐⭐⭐ */
+	font-family: 'PeterFonts';
+	font-size: 8pt;
+	line-height: 1.625;
+}
+
+.fcf-title > * {
+	--shadow-distance: 2px;
+	--thin-border: var(--thin-glow), var(--thin-glow);
+	
+	background-color: rgb(20, 10, 10);
+	white-space: nowrap;
+	padding: 0.125em 0.25em;
+	box-sizing: border-box;
+	text-transform: uppercase;
+	text-overflow: ellipsis;
+	letter-spacing: 0.1ch;
+	max-width: 100%;
+	overflow: hidden;
+	border-radius: 0.3em;
+
+	box-shadow:
+		var(--thin-border),
+		var(--side-glow, none),
+		calc(var(--shadow-direction, 0) * 5px) calc(-0.5 * var(--shadow-distance)) var(--shadow-distance) rgba(0,0,0,50%);
+		
+	/* "Zapfino" */
+	/* padding: 0.75em 1em 0 1em; */
+	
+	/* "PeterFonts" */
+	padding: 0.25em 0.5em 0 0.5em;
+}
+
+.fcf--median-visible .fcf-title > * {
+	box-shadow:
+		var(--thin-border),
+		0 calc(-0.5 * var(--shadow-distance)) var(--shadow-distance) rgba(0,0,0,50%);
+}
