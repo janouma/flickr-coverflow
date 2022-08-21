@@ -14,7 +14,7 @@ const EXTRAS = [
 ]
 
 export default class FlickrDataSource {
-  static #CLASS_ID = `[flickr-coverflow/${this.name}]`
+  static #CLASS_ID = '[flickr-coverflow/FlickrDataSource]'
   static EMPTY_RESULTS = Object.freeze([])
   #currentPage = 1
   #endOfStream = false

@@ -1,6 +1,6 @@
 {
   "name": "flickr-coverflow",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "micro lib to display flicker gallery as a coverflow",
   "source": "src/index.js",
   "type": "module",
